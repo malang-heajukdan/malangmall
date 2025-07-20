@@ -45,4 +45,5 @@ class MyApp extends StatelessWidget {
         home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
   }
 }
-// 간바레간바레 말랑쨩!
+
+// 다시테스트!
