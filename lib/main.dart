@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/cart_provider.dart';
 import 'package:flutter_application_1/pages/item_detail.dart';
-import 'package:flutter_application_1/pages/item_detail2.dart';
+import 'package:flutter_application_1/pages/item_list.dart';
 import 'package:flutter_application_1/pages/item_detail2.dart';
 import 'package:flutter_application_1/pages/item_register.dart';
 import 'package:flutter_application_1/pages/thumbnail_touch_page.dart';
@@ -35,14 +35,20 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         // home: const ItemRegister()); // 영민 테스트용!
         // home: ItemDetail2(item: testItem)); // 소린 테스트용!
-        // 초희님까지 끝나면!! 아래코드로 실행해주기!
-        // home: const ItemList(),
-        // routes: {
-        //   '/cart': (_) => const CartPage(),
-        // },
-        // );
+        //home: const ItemList()); //초희 테스트
+    // 초희님까지 끝나면!! 아래코드로 실행해주기!
+    // home: const ItemList(),
+    initialRoute: '/',
+    routes: {
+      //'/cart': (_) => const CartPage(),
+      '/': (_) => const ThumbnailTouchPage(), // 초기화면 입력이 필요합니다. 
+      '/register': (_) => const ItemRegister(),
+      '/detail': (_) => ItemDetail2(item: testItem),
+      '/list': (_) => const ItemList(),
+    },
+    );
 
-        home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
+       // home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
   }
 }
 
