@@ -86,12 +86,24 @@ class _ItemCartState extends State<ItemCart> {
                              Row(
                               children: [
                                 IconButton(
-                                  onPressed: () {}, // ➖ 버튼: 수량 감소 기능은 아직 구현x
+                                  // - 버튼: 수량 감소 
+                                  onPressed: () {
+                                    setState(() {
+                                     if (item['quantity'] > 1) {
+                                      item['quantity']--;
+                                    }
+                                  });
+                                }, 
                                   icon: Icon(Icons.remove_circle_outline),
                                 ),
                                 Text('${item['quantity']}'), // 현재 수량 표시하기
                                 IconButton(
-                                  onPressed: () {}, // ➕ 버튼: 수량 증가 기능은 아직 구현x
+                                  // + 버튼: 수량 증가 기능
+                                  onPressed: () {
+                                    setState(() {
+                                      item['quantity']++;
+                                    });
+                                  }, 
                                   icon: Icon(Icons.add_circle_outline),
                                 ),
                               ],
