@@ -52,6 +52,15 @@ class ItemProvider with ChangeNotifier {
       imagePath: 'lib/assets/images/apolozi.jpeg',
       price: 20000,
     ));
+        _items.add(Item(
+      id: 'mock_eng',
+      name: 'Kinda Octopus',
+      description:
+          "Behold, the legend of the English Lucky Octo-Pal! This whimsical octopus hails from the misty shores of England, and it's not just any cephalopod it's a genuine bringer of good fortune! But heed this warning, dear friend: If you purchase this magnificent creature and fail to recommend it to at least one close companion within one week, you shall invite the Octo-Curse! Your hair will, with alarming speed, transform into octopus tentacles!",
+      imagePath: 'lib/assets/images/octopus.png',
+      price: 40,
+    ));
+    
     _items.add(Item(
       id: 'mock_4',
       name: '대충 문어2',
@@ -85,6 +94,8 @@ class ItemProvider with ChangeNotifier {
       price: 15000,
     ));
   
+
+
   }
 
   Future<void> loadItems() async {}

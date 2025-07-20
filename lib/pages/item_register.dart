@@ -3,7 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/models/item.dart';
+import 'package:flutter_application_1/provider/item_provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
+import 'package:intl/intl.dart';
 
 class ItemRegister extends StatefulWidget {
   const ItemRegister({super.key});
@@ -18,7 +22,9 @@ class _ItemRegister extends State<ItemRegister> {
   var priceController = TextEditingController();
   var descriptionController = TextEditingController();
 
+  // 라이브러리용
   File? _image;
+  final uuid = const Uuid();
 
   // 이미지 피커
   Future<void> _pickImage() async {
@@ -32,16 +38,14 @@ class _ItemRegister extends State<ItemRegister> {
     }
   }
 
+  // State 호출
   @override
   void initState() {
     super.initState();
     nameController.addListener(() {
-      print("dlfma");
       setState(() {});
     });
     priceController.addListener(() {
-      print("dlfma");
-
       setState(() {});
     });
   }
@@ -117,11 +121,11 @@ class _ItemRegister extends State<ItemRegister> {
         child: Container(
           height: 250,
           width: double.infinity,
-          color: Color(0xFF95C5D4),
+          color: const Color(0xFF95C5D4),
           child: _image == null
-              ? Align(
+              ? const Align(
                   alignment: Alignment.center,
-                  child: const Text(
+                  child: Text(
                     "사진 선택",
                     style: TextStyle(
                         color: Colors.white,
@@ -149,10 +153,10 @@ class _ItemRegister extends State<ItemRegister> {
   // 상품 이름 텍스트 필드
   Padding nameTextField() {
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: TextFormField(
         controller: nameController,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 12,
         ),
         validator: (value) {
@@ -161,9 +165,8 @@ class _ItemRegister extends State<ItemRegister> {
           }
           return null;
         },
-        autovalidateMode: AutovalidateMode.onUnfocus,
-        cursorColor: Color(0xFF95C5D4),
-        //cursorHeight: 20,
+        cursorColor: const Color(0xFF95C5D4),
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: borderDecoration("상품 이름을 입력해주세요."),
       ),
     );
@@ -172,13 +175,16 @@ class _ItemRegister extends State<ItemRegister> {
   // 상품 가격 텍스트 필드
   Widget priceTextField() {
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: TextFormField(
         controller: priceController,
-        style: TextStyle(fontSize: 12),
-        cursorColor: Color(0xFF95C5D4),
+        style: const TextStyle(fontSize: 12),
+        cursorColor: const Color(0xFF95C5D4),
         keyboardType: TextInputType.number,
-        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        inputFormatters: [
+          FilteringTextInputFormatter.digitsOnly,
+          ThousandsSeparatorInputFormatter(),
+        ],
         validator: (value) {
           if (value == null || value.isEmpty) {
             return "상품 가격은 비워둘 수 없습니다.";
@@ -188,7 +194,7 @@ class _ItemRegister extends State<ItemRegister> {
           }
           return null;
         },
-        autovalidateMode: AutovalidateMode.onUnfocus,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: borderDecoration("상품 가격을 입력해주세요.(단위:원)"),
       ),
     );
@@ -197,17 +203,24 @@ class _ItemRegister extends State<ItemRegister> {
   // 상품 설명 텍스트 필드
   Widget descriptionTextField() {
     return Padding(
-      padding: EdgeInsets.fromLTRB(17, 10, 17, 10),
+      padding: const EdgeInsets.fromLTRB(17, 10, 17, 10),
       child: SizedBox(
         height: 150,
         child: TextFormField(
           controller: descriptionController,
-          style: TextStyle(fontSize: 12),
+          style: const TextStyle(fontSize: 12),
+          cursorColor: const Color(0xFF95C5D4),
           minLines: 10,
           maxLines: null,
           textAlignVertical: TextAlignVertical.top,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "상품 설명은 비워둘 수 없습니다.";
+            }
+            return null;
+          },
           decoration: borderDecoration("상품 설명을 입력해주세요."),
-          cursorColor: Color(0xFF95C5D4),
+          autovalidateMode: AutovalidateMode.onUserInteraction,
         ),
       ),
     );
@@ -217,24 +230,38 @@ class _ItemRegister extends State<ItemRegister> {
   InputDecoration borderDecoration(String guideText) {
     return InputDecoration(
       hintText: guideText,
-      border: OutlineInputBorder(),
-      enabledBorder: OutlineInputBorder(
+      border: const OutlineInputBorder(),
+      enabledBorder: const OutlineInputBorder(
         borderSide: BorderSide(color: Color(0xFF95C5D4)),
       ),
-      focusedBorder: OutlineInputBorder(
+      focusedBorder: const OutlineInputBorder(
         borderSide: BorderSide(color: Color(0xFF95C5D4)),
       ),
-      errorBorder: OutlineInputBorder(
+      errorBorder: const OutlineInputBorder(
         borderSide: BorderSide(color: Colors.pinkAccent),
       ),
     );
   }
 
+  // 버튼 활성화 조건
   bool isPossibleRegister() {
     return (nameController.text.isNotEmpty &&
         priceController.text.isNotEmpty &&
         descriptionController.text.isNotEmpty &&
         _image != null);
+  }
+
+  // 상품 데이터 전달
+  Item _submitForm() {
+    String id = uuid.v4();
+    final newItem = Item(
+      id: id,
+      name: nameController.text,
+      price: int.parse(priceController.text.replaceAll(",", "")),
+      imagePath: _image!.path,
+      description: descriptionController.text,
+    );
+    return newItem;
   }
 
   // 등록하기 버튼
@@ -264,42 +291,93 @@ class _ItemRegister extends State<ItemRegister> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pop(
-                      context,
-                      Item(
-                          id: "",
-                          name: nameController.text,
-                          price: int.parse(priceController
-                              .text), // NumberFormat('#,###').format(priceController.text),를 쓰면 15,000원 이렇게 나와용!!
-                          description: descriptionController.text,
-                          imagePath: _image!.path));
+                  final itemProvider =
+                      Provider.of<ItemProvider>(context, listen: false);
+                  itemProvider.addItem(_submitForm());
+
+                  // 등록 완료 팝업
+                  showDialogPopup();
                 },
               ),
             )),
       ),
     );
   }
+
+  // 등록 완료 팝업
+  Future<dynamic> showDialogPopup() {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        backgroundColor: Colors.white,
+        // 타이틀
+        title: const Row(
+          children: [
+            Text(
+              "등록 완료",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+        // 내용
+        content: const Text(
+          "상품이 등록되었습니다.",
+          style: TextStyle(fontSize: 14),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // 팝업 닫기
+              Navigator.of(context).pop(); // 등록 페이지 닫기
+            },
+            style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Color(0xFF95c5d4),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                )),
+            child: const Text("확인"),
+          )
+        ],
+      ),
+    );
+  }
 }
 
+// 상품 가격 텍스트 필드 포매터
+class ThousandsSeparatorInputFormatter extends TextInputFormatter {
+  final NumberFormat _formatter = NumberFormat.decimalPattern();
 
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final oldText = oldValue.text;
+    final newText = newValue.text;
 
+    // 숫자만 추출 (콤마 제거)
+    String numericText = newText.replaceAll(RegExp(r'[^0-9]'), '');
+    if (numericText.isEmpty) {
+      return newValue.copyWith(text: '');
+    }
 
+    // 포맷 적용
+    String formatted = _formatter.format(int.parse(numericText));
 
+    // 커서 위치 계산
+    int selectionIndex =
+        formatted.length - (oldText.length - oldValue.selection.end);
+    selectionIndex = selectionIndex.clamp(0, formatted.length);
 
-/// ---소린 : 아이템 넘길때 이거 참고하셔도 좋을 것 같아요!!! ---
-/// 
-// final itemProvider = Provider.of<ItemProvider>(context, listen: false);
+    return TextEditingValue(
+      text: formatted,
+      selection: TextSelection.collapsed(offset: selectionIndex),
+    );
+  }
+}
 
-// void _submitForm() {
-//   final newItem = Item(
-//     id: const Uuid().v4(), // uuid로 고유 id 생성
-//     name: nameController.text,
-//     price: int.parse(priceController.text),
-//     imagePath: _imagePath,
-//     description: descriptionController.text,
-//   );
-
-//   itemProvider.addItem(newItem);
-
-//   Navigator.pop(context); // 등록 후 뒤로
-// }
+// git 테스트

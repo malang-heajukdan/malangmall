@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/cart_provider.dart';
 import 'package:flutter_application_1/pages/item_detail.dart';
 import 'package:flutter_application_1/pages/item_list.dart';
+import 'package:flutter_application_1/pages/item_detail2.dart';
 import 'package:flutter_application_1/pages/item_register.dart';
+import 'package:flutter_application_1/pages/thumbnail_touch_page.dart';
 import 'package:flutter_application_1/provider/item_provider.dart';
 import 'package:flutter_application_1/styles/theme.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final testItem = context.read<ItemProvider>().items[1]; //mock item 2
+    final testItem = context.read<ItemProvider>().items[3]; //mock item 2
 
     return MaterialApp(
         title: 'Shopping Mall',
@@ -32,18 +34,22 @@ class MyApp extends StatelessWidget {
         // darkTheme: darkTheme,
         debugShowCheckedModeBanner: false,
         // home: const ItemRegister()); // 영민 테스트용!
-        // home: ItemDetail(item: testItem)); // 소린 테스트용!
+        // home: ItemDetail2(item: testItem)); // 소린 테스트용!
         //home: const ItemList()); //초희 테스트
     // 초희님까지 끝나면!! 아래코드로 실행해주기!
     // home: const ItemList(),
     initialRoute: '/',
     routes: {
       //'/cart': (_) => const CartPage(),
-      '/': (_) => const ItemList(), // 초기화면 입력이 필요합니다. 임의로 ItemList로 설정했습니다.
+      '/': (_) => const ThumbnailTouchPage(), // 초기화면 입력이 필요합니다. 
       '/register': (_) => const ItemRegister(),
-      '/detail': (_) => ItemDetail(item: testItem),
+      '/detail': (_) => ItemDetail2(item: testItem),
       '/list': (_) => const ItemList(),
     },
     );
+
+       // home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
   }
 }
+
+// 다시테스트!

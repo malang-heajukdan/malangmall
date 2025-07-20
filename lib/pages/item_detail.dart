@@ -276,7 +276,7 @@ class _ItemDetailState extends State<ItemDetail> {
 
                 //  총 가격 텍스트 및 금액 (가로로 배치) !! (--> flexible하게)
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 2),
+                  padding: const EdgeInsets.symmetric(horizontal: 0),
                   child: Center(
                     child: Text(
                       '총 ${NumberFormat('#,###').format(widget.item.price * quantity)}원',
