@@ -8,8 +8,7 @@ import '../styles/app_colors.dart';
 import '../models/item.dart';
 import '../provider/item_provider.dart';
 // 상품 상세 페이지
-import 'item_detail.dart';
-
+import 'item_detail2.dart';
 
 class ItemList extends StatefulWidget {
   const ItemList({super.key});
@@ -20,7 +19,7 @@ class ItemList extends StatefulWidget {
 
 class _ItemListState extends State<ItemList> {
   // 상품 목록 갱신
-    Future<void> _loadItems() async {
+  Future<void> _loadItems() async {
     await Provider.of<ItemProvider>(context, listen: false).loadItems();
   }
 
@@ -32,15 +31,14 @@ class _ItemListState extends State<ItemList> {
       _loadItems();
     });
   }
+
   /// 가격을 천 단위 콤마로 포맷해주는 함수
   String _formatPrice(int price) {
     return price.toString().replaceAllMapped(
-      RegExp(r'(\d)(?=(\d{3})+(?!\d))'),
-      (match) => '${match[1]},',
-    );
+          RegExp(r'(\d)(?=(\d{3})+(?!\d))'),
+          (match) => '${match[1]},',
+        );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +65,7 @@ class _ItemListState extends State<ItemList> {
             color: AppColors.primary,
           ),
         ],
-        backgroundColor: AppColors.surface, // 커스텀 컬러 사용 
+        backgroundColor: AppColors.surface, // 커스텀 컬러 사용
       ),
 
       // 본문 내용 (상품 리스트 or '상품 없음' 메시지)
@@ -103,7 +101,8 @@ class _ItemListState extends State<ItemList> {
                         },
                         child: Center(
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Image.asset(
                               'lib/assets/images/malang_banner.png', //로고 이미지
                               fit: BoxFit.contain,
@@ -121,29 +120,31 @@ class _ItemListState extends State<ItemList> {
                   Expanded(
                     child: GridView.builder(
                       itemCount: items.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,         // 2열로 배치
-                        mainAxisSpacing: 12,       // 수직 간격
-                        crossAxisSpacing: 12,      // 수평 간격
-                        childAspectRatio: 1.0,     // 정사각형
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, // 2열로 배치
+                        mainAxisSpacing: 12, // 수직 간격
+                        crossAxisSpacing: 12, // 수평 간격
+                        childAspectRatio: 1.0, // 정사각형
                       ),
                       itemBuilder: (_, index) {
                         final item = items[index];
 
                         // 이미지 로딩 방식 분기 (assets 또는 File)
-                        final imageWidget = item.imagePath.contains('lib/assets/')
-                            ? Image.asset(
-                                item.imagePath,
-                                fit: BoxFit.contain,
-                                width: double.infinity,
-                                height: double.infinity,
-                              )
-                            : Image.file(
-                                File(item.imagePath),
-                                fit: BoxFit.contain,
-                                width: double.infinity,
-                                height: double.infinity,
-                              );
+                        final imageWidget =
+                            item.imagePath.contains('lib/assets/')
+                                ? Image.asset(
+                                    item.imagePath,
+                                    fit: BoxFit.contain,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                  )
+                                : Image.file(
+                                    File(item.imagePath),
+                                    fit: BoxFit.contain,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                  );
 
                         return GestureDetector(
                           onTap: () {
@@ -151,7 +152,7 @@ class _ItemListState extends State<ItemList> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => ItemDetail(item: item),
+                                builder: (_) => ItemDetail2(item: item),
                               ),
                             );
                           },
@@ -183,7 +184,8 @@ class _ItemListState extends State<ItemList> {
 
                                 // 상품 이름
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
                                   child: Text(
                                     item.name,
                                     style: GoogleFonts.notoSans(
@@ -199,7 +201,8 @@ class _ItemListState extends State<ItemList> {
 
                                 // 가격 표시
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
                                   child: Text(
                                     '${_formatPrice(item.price)}원',
                                     style: GoogleFonts.notoSans(
@@ -222,7 +225,7 @@ class _ItemListState extends State<ItemList> {
                 ],
               ),
             ),
-        floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await Navigator.pushNamed(context, '/register');
           _loadItems(); // 상품 등록 후 목록 갱신
@@ -236,4 +239,3 @@ class _ItemListState extends State<ItemList> {
     );
   }
 }
-

@@ -28,28 +28,26 @@ class MyApp extends StatelessWidget {
     final testItem = context.read<ItemProvider>().items[3]; //mock item 2
 
     return MaterialApp(
-        title: 'Shopping Mall',
-        themeMode: ThemeMode.light,
-        theme: lightTheme,
-        // darkTheme: darkTheme,
-        debugShowCheckedModeBanner: false,
-        // home: const ItemRegister()); // 영민 테스트용!
-        // home: ItemDetail2(item: testItem)); // 소린 테스트용!
-        //home: const ItemList()); //초희 테스트
-    // 초희님까지 끝나면!! 아래코드로 실행해주기!
-    // home: const ItemList(),
-    initialRoute: '/',
-    routes: {
-      //'/cart': (_) => const CartPage(),
-      '/': (_) => const ThumbnailTouchPage(), // 초기화면 입력이 필요합니다. 
-      '/register': (_) => const ItemRegister(),
-      '/detail': (_) => ItemDetail2(item: testItem),
-      '/list': (_) => const ItemList(),
-    },
+      title: 'Shopping Mall',
+      themeMode: ThemeMode.light,
+      theme: lightTheme,
+      // darkTheme: darkTheme,
+      debugShowCheckedModeBanner: false,
+      // home: const ItemRegister()); // 영민 테스트용!
+      // home: ItemDetail2(item: testItem)); // 소린 테스트용!
+      //home: const ItemList()); //초희 테스트
+      // 초희님까지 끝나면!! 아래코드로 실행해주기!
+      // home: const ItemList(),
+      initialRoute: '/',
+      routes: {
+        //'/cart': (_) => const CartPage(),
+        '/': (_) => ThumbnailTouchPage(), // 초기화면 입력이 필요합니다.
+        '/register': (_) => ItemRegister(),
+        '/detail': (_) => ItemDetail2(item: testItem),
+        '/list': (_) => ItemList(),
+      },
     );
 
-       // home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
+    // home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
   }
 }
-
-// 다시테스트!
