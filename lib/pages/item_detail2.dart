@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/item.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import '../models/cart_provider.dart';
+// import '../models/cart_provider.dart';
 
 class ItemDetail2 extends StatefulWidget {
   final Item item;
@@ -31,7 +31,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
 
     // 화면 크기 가져오기
     final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
+    // final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -56,7 +56,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
               alignment: Alignment.bottomCenter,
               children: [
                 Image.asset(
-                  'lib/assets/images/bg2.png',
+                  'lib/assets/images/background_reverse.png',
                   height: screenHeight * 0.35,
                   width: double.infinity,
                   fit: BoxFit.cover,
