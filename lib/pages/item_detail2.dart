@@ -301,3 +301,5 @@ class _ItemDetail2State extends State<ItemDetail2> {
     );
   }
 }
+
+//뀨뀨
