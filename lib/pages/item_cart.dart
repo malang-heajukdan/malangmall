@@ -68,8 +68,10 @@ class ItemCart extends StatelessWidget {
               ? Center(
                   child: Text(
                     '장바구니가 비었습니다.',
-                    style:
-                        GoogleFonts.notoSans(fontSize: 18, color: Colors.grey),
+                    style: GoogleFonts.notoSans(
+                        fontSize: 18,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold),
                   ),
                 )
               : Column(
@@ -237,8 +239,9 @@ class ItemCart extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  const SizedBox(height: 18),
                                   Padding(
-                                    padding: const EdgeInsets.all(12.0),
+                                    padding: const EdgeInsets.only(left: 16),
                                     child: Text(
                                       '총 가격',
                                       style: GoogleFonts.notoSans(
@@ -248,18 +251,21 @@ class ItemCart extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(height: 6),
-                                  Text(
-                                    //${_formatPrice(item.price)}원
-                                    '${_formatPrice(cartProvider.totalPrice)}원',
-                                    style: GoogleFonts.notoSans(
-                                      color: Colors.white,
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold,
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 16),
+                                    child: Text(
+                                      //${_formatPrice(item.price)}원
+                                      '${_formatPrice(cartProvider.totalPrice)}원',
+                                      style: GoogleFonts.notoSans(
+                                        color: Colors.white,
+                                        fontSize: 32,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(
                                     height: 4,
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
@@ -279,18 +285,25 @@ class ItemCart extends StatelessWidget {
                                   showDialog(
                                     context: context,
                                     builder: (context) => AlertDialog(
-                                      title: const Text('구매 완료'),
-                                      content: const Text('구매가 성공적으로 완료되었습니다.'),
+                                      title: Text('구매 완료',
+                                          style: GoogleFonts.notoSans(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 20,
+                                              color: const Color(0xFF6B9DAD))),
+                                      content: Text('구매가 성공적으로 완료되었습니다.',
+                                          style: GoogleFonts.notoSans(
+                                            fontSize: 16,
+                                          )),
                                       actions: [
                                         TextButton(
                                           onPressed: () =>
                                               Navigator.pop(context),
-                                          child: const Center(
+                                          child: Center(
                                             child: Text(
                                               '확인',
-                                              style: TextStyle(
-                                                color: Colors.blue,
-                                              ),
+                                              style: GoogleFonts.notoSans(
+                                                  color: Colors.blue,
+                                                  fontWeight: FontWeight.bold),
                                             ),
                                           ),
                                         )

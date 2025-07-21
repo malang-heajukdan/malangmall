@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/item.dart';
 import 'package:flutter_application_1/pages/item_cart.dart';
 import 'package:flutter_application_1/provider/cart_provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -34,223 +35,263 @@ class _ItemDetail2State extends State<ItemDetail2> {
     final screenHeight = MediaQuery.of(context).size.height;
     // final screenWidth = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: blue,
-        elevation: 0,
-        title: const Text(
-          '',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    return Stack(
+      children: [
+        Image.asset(
+          'lib/assets/images/detail_bg2_noshad.png',
+          height: screenHeight,
+          width: double.infinity,
+          fit: BoxFit.cover,
         ),
-      ),
-      body: Column(
-        children: [
-          // 이미지 + 상품명
-          Container(
-            height: screenHeight * 0.35,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: blue,
-            ),
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                Image.asset(
-                  'lib/assets/images/background_reverse.png',
-                  height: screenHeight * 0.35,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-                Image.asset(
-                  widget.item.imagePath,
-                  height: screenHeight * 0.3,
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) =>
-                      const Icon(Icons.image_not_supported),
-                ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Text(
-                    widget.item.name,
-                    style: const TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF242424),
-                    ),
-                  ),
-                ),
-              ],
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            title: Text(
+              '',
+              style: GoogleFonts.notoSans(
+                  fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
-
-          // 가격 + 수량 선택
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '${NumberFormat('###,###').format(widget.item.price * quantity)}원',
-                  style: const TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF242424)),
-                ),
-                Row(
-                  children: [
-                    _quantityButton(Icons.remove, _decreaseQuantity),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        '$quantity',
-                        style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF242424)),
-                      ),
-                    ),
-                    _quantityButton(Icons.add, _increaseQuantity),
-                  ],
-                ),
-              ],
-            ),
-          ),
-
-          // 설명 영역
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Description',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: black3)),
-                const SizedBox(height: 6),
-                Container(
-                  height: screenHeight * 0.25,
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade100,
-                        blurRadius: 3,
-                        offset: const Offset(0, -2),
-                      )
-                    ],
-                  ),
-                  child: Stack(
+          body: Stack(
+            children: [
+              Container(
+                height: screenHeight * 0.3,
+                // color: blue,
+              ),
+              SingleChildScrollView(
+                child: IntrinsicHeight(
+                  child: Column(
                     children: [
-                      SingleChildScrollView(
-                        child: Text(
-                          widget.item.description,
-                          style: const TextStyle(fontSize: 16),
+                      // 이미지 + 상품명
+                      Container(
+                        height: screenHeight * 0.35,
+                        width: double.infinity,
+                        decoration: const BoxDecoration(
+                            // color: blue,
+                            ),
+                        child: Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            // Image.asset(
+                            //   'lib/assets/images/detail_bg.jpg',
+                            //   height: screenHeight * 0.35,
+                            //   width: double.infinity,
+                            //   fit: BoxFit.cover,
+                            // ),
+                            Image.asset(
+                              widget.item.imagePath,
+                              height: screenHeight * 0.3,
+                              fit: BoxFit.cover,
+                              errorBuilder: (_, __, ___) =>
+                                  const Icon(Icons.image_not_supported),
+                            ),
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Text(
+                                widget.item.name,
+                                style: GoogleFonts.notoSans(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                  color: const Color(0xFF242424),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        height: screenHeight * 0.05,
-                        child: IgnorePointer(
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  Colors.white12,
-                                  Colors.white,
+
+                      // 이미지 아래 모든 콘텐츠를 감싸는 흰색 Container
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          children: [
+                            // 가격 + 수량 선택
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 20),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    widget.item.price == 0
+                                        ? '무료'
+                                        : '${NumberFormat('###,###').format(widget.item.price * quantity)}원',
+                                    style: GoogleFonts.notoSans(
+                                        fontSize: 32,
+                                        fontWeight: FontWeight.bold,
+                                        color: const Color(0xFF242424)),
+                                  ),
+                                  Row(
+                                    children: [
+                                      _quantityButton(
+                                          Icons.remove, _decreaseQuantity),
+                                      Container(
+                                        width: 40,
+                                        height: 40,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: Text(
+                                          '$quantity',
+                                          style: GoogleFonts.notoSans(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: const Color(0xFF242424)),
+                                        ),
+                                      ),
+                                      _quantityButton(
+                                          Icons.add, _increaseQuantity),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ),
-                          ),
+
+                            // 설명 영역
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 30),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('상품 상세',
+                                      style: GoogleFonts.notoSans(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: black3)),
+                                  const SizedBox(height: 6),
+                                  Container(
+                                    height: screenHeight * 0.25,
+                                    // padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      // color: Colors.white,
+                                      borderRadius: BorderRadius.circular(15),
+                                      // boxShadow: [
+                                      //   BoxShadow(
+                                      //     color: Colors.grey.shade100,
+                                      //     blurRadius: 5,
+                                      //     offset: const Offset(0, -2),
+                                      //   )
+                                      // ],
+                                    ),
+                                    child: Text(
+                                      widget.item.description,
+                                      style: GoogleFonts.notoSans(fontSize: 16),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                                height: 50), // 하단 버튼 영역을 위해 충분한 여백 추가
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ],
-      ),
-
-      // 하단 네비게이션 바
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewPadding.bottom + 3,
-        ),
-        child: Container(
-          height: 85,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                flex: 3,
-                child: Container(
-                  height: double.infinity,
-                  margin: const EdgeInsets.symmetric(horizontal: 8), //가로 여백
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _showPurchaseDialog();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: blue,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
+              ), ////// ㅇ<<<<<
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: screenHeight * 0.05,
+                child: IgnorePointer(
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.white12,
+                          Colors.white,
+                        ],
+                      ),
                     ),
-                    child: const Text('Order Now',
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold)),
-                  ),
-                ),
-              ),
-              // SizedBox(width: 16),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  height: double.infinity,
-                  margin: const EdgeInsets.symmetric(horizontal: 8), // 가로 여백
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _showAddToCartDialog(() {
-                        final cart = Provider.of<CartProvider>(context,
-                            listen:
-                                false); // 이 버튼은 cartprovider의 상태 변화에 상관없이 동일한 모습이므로, 다시 build되지 않게 listen: false로 설정했습니당
-                        cart.addToCart(widget.item, quantity);
-                      });
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: blue,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      padding: const EdgeInsets.all(12),
-                    ),
-                    child: const Icon(Icons.shopping_cart_outlined,
-                        color: Colors.white, size: 40),
                   ),
                 ),
               ),
             ],
           ),
+
+          // 하단 네비게이션 바
+          bottomNavigationBar: Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewPadding.bottom + 3,
+            ),
+            child: Container(
+              height: 85,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      height: double.infinity,
+                      margin: const EdgeInsets.symmetric(horizontal: 8), //가로 여백
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _showPurchaseDialog();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: blue,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                        ),
+                        child: Text('구매하기',
+                            style: GoogleFonts.notoSans(
+                                fontSize: 24, fontWeight: FontWeight.bold)),
+                      ),
+                    ),
+                  ),
+                  // SizedBox(width: 16),
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      height: double.infinity,
+                      margin:
+                          const EdgeInsets.symmetric(horizontal: 8), // 가로 여백
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _showAddToCartDialog(() {
+                            final cart = Provider.of<CartProvider>(context,
+                                listen:
+                                    false); // 이 버튼은 cartprovider의 상태 변화에 상관없이 동일한 모습이므로, 다시 build되지 않게 listen: false로 설정했습니당
+                            cart.addToCart(widget.item, quantity);
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: blue,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          padding: const EdgeInsets.all(12),
+                        ),
+                        child: const Icon(Icons.shopping_cart_outlined,
+                            color: Colors.white, size: 40),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 
@@ -275,37 +316,37 @@ class _ItemDetail2State extends State<ItemDetail2> {
     showCupertinoDialog(
       context: context,
       builder: (ctx) => CupertinoAlertDialog(
-        title: const Text('Confirm purchase:',
-            style: TextStyle(
+        title: Text('좋은 선택이예요!',
+            style: GoogleFonts.notoSans(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF6B9DAD))),
+                color: const Color(0xFF6B9DAD))),
         content: Text.rich(
           TextSpan(
             children: [
               TextSpan(
-                text: '\nAre you sure \nyou want to buy.. ',
-                style: TextStyle(
-                    fontSize: 16, color: black3, fontWeight: FontWeight.bold),
-              ),
-              TextSpan(
-                text: '\n\n$quantity * ${widget.item.name}?',
+                text: '\n ${widget.item.name}!! ',
                 style:
                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              TextSpan(
+                text: '\n$quantity개 구매하시겠어요? ',
+                style: GoogleFonts.notoSans(
+                    fontSize: 18, color: black3, fontWeight: FontWeight.bold),
               ),
             ],
           ),
         ),
         actions: [
           CupertinoDialogAction(
-            child:
-                const Text('Maybe later', style: TextStyle(color: Colors.grey)),
+            child: Text('취소', style: GoogleFonts.notoSans(color: Colors.grey)),
             onPressed: () => Navigator.pop(ctx),
           ),
           CupertinoDialogAction(
-            child: const Text('Let’s do it!!',
-                style: TextStyle(
-                    color: Color(0xFFF28A98), fontWeight: FontWeight.bold)),
+            child: Text('확인',
+                style: GoogleFonts.notoSans(
+                    color: const Color(0xFFF28A98),
+                    fontWeight: FontWeight.bold)),
             onPressed: () {
               Navigator.pop(ctx);
               _showCompleteDialog();
@@ -327,14 +368,14 @@ class _ItemDetail2State extends State<ItemDetail2> {
           }
         });
 
-        return const CupertinoAlertDialog(
-          title: Text('🎉 Thank you! 🎉',
-              style: TextStyle(
+        return CupertinoAlertDialog(
+          title: Text('🎉 감사합니다! 🎉',
+              style: GoogleFonts.notoSans(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF6B9DAD))),
-          content: Text('Your purchase is complete ',
-              style: TextStyle(fontSize: 16)),
+                  color: const Color(0xFF6B9DAD))),
+          content: Text('\n구매가 완료되었습니다 🐙',
+              style: GoogleFonts.notoSans(fontSize: 16)),
         );
       },
     );
@@ -352,26 +393,26 @@ class _ItemDetail2State extends State<ItemDetail2> {
     showCupertinoDialog(
       context: context,
       builder: (ctx) => CupertinoAlertDialog(
-        title: const Text(
-          'Add to cart 🛒',
-          style: TextStyle(
+        title: Text(
+          '🛒 장바구니 담기 🛒',
+          style: GoogleFonts.notoSans(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF6B9DAD)),
+              color: const Color(0xFF6B9DAD)),
         ),
         content: Text.rich(
           TextSpan(
             children: [
               TextSpan(
-                text: '\n $quantity * ${widget.item.name}\n\n',
-                style: const TextStyle(
+                text: '\n ${widget.item.name}를 ',
+                style: GoogleFonts.notoSans(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const TextSpan(
-                text: 'Sounds good to add this to your cart?',
-                style: TextStyle(
+              TextSpan(
+                text: '\n장바구니에 담으시겠어요?',
+                style: GoogleFonts.notoSans(
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                 ),
@@ -381,13 +422,14 @@ class _ItemDetail2State extends State<ItemDetail2> {
         ),
         actions: [
           CupertinoDialogAction(
-            child: const Text('Not now', style: TextStyle(color: Colors.grey)),
+            child: Text('취소', style: GoogleFonts.notoSans(color: Colors.grey)),
             onPressed: () => Navigator.pop(ctx),
           ),
           CupertinoDialogAction(
-            child: const Text('Yep!',
-                style: TextStyle(
-                    color: Color(0xFFF28A98), fontWeight: FontWeight.bold)),
+            child: Text('확인',
+                style: GoogleFonts.notoSans(
+                    color: const Color(0xFFF28A98),
+                    fontWeight: FontWeight.bold)),
             onPressed: () {
               Navigator.pop(ctx);
               Future.microtask(() {
@@ -410,47 +452,53 @@ class _ItemDetail2State extends State<ItemDetail2> {
         //   if (Navigator.canPop(ctx)) Navigator.pop(ctx); // 리스트로!
         // });
         return CupertinoAlertDialog(
-          title: const Text('🎉 Yayyy 🎉',
-              style: TextStyle(
+          title: Text('장바구니에 담겼습니다!',
+              style: GoogleFonts.notoSans(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF6B9DAD))),
+                  color: const Color(0xFF6B9DAD))),
           content: RichText(
             textAlign: TextAlign.center,
-            text: const TextSpan(
+            text: TextSpan(
               children: [
+                // TextSpan(
+                //     text: '\n장바구니에 담겼습니다!',
+                //     style: GoogleFonts.notoSans(
+                //         fontSize: 16, color: const Color(0xFF242424))),
+                // TextSpan(
+                //     text: '\n지금 확인해보세요 🛒',
+                //     style: GoogleFonts.notoSans(
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.bold,
+                //         color: const Color(0xFF242424))),
                 TextSpan(
-                    text: '\nAdded to your cart!',
-                    style: TextStyle(fontSize: 16, color: Color(0xFF242424))),
-                TextSpan(
-                    text: '\n\nCheck it out\nin the cart page 🛒',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF242424))),
+                    text: '\n지금 확인해보세요 🛒',
+                    style: GoogleFonts.notoSans(
+                        fontSize: 16, color: const Color(0xFF242424))),
               ],
             ),
           ),
           actions: [
             CupertinoDialogAction(
-              child: const Text('Not now',
-                  style: TextStyle(
-                      color: Colors.grey, fontWeight: FontWeight.bold)),
-              onPressed: () {
-                Navigator.pop(ctx); // 다이얼로그 닫기
-                // Navigator.pop(context, widget.item); // 이전 화면으로 아이템 정보 전달
-              },
-            ),
-            CupertinoDialogAction(
-              child: const Text('Take me there 🚀',
-                  style: TextStyle(
-                      color: Color(0xFFF28A98), fontWeight: FontWeight.bold)),
+              child: Text('장바구니로 가기 🚀',
+                  style: GoogleFonts.notoSans(
+                      color: const Color(0xFFF28A98),
+                      fontWeight: FontWeight.bold)),
               onPressed: () {
                 Navigator.pop(ctx); // 다이얼로그 닫기
                 Navigator.push(
                   context,
                   CupertinoPageRoute(builder: (_) => const ItemCart()),
                 );
+              },
+            ),
+            CupertinoDialogAction(
+              child: Text('취소',
+                  style: GoogleFonts.notoSans(
+                      color: Colors.grey, fontWeight: FontWeight.bold)),
+              onPressed: () {
+                Navigator.pop(ctx); // 다이얼로그 닫기
+                // Navigator.pop(context, widget.item); // 이전 화면으로 아이템 정보 전달
               },
             ),
           ],
