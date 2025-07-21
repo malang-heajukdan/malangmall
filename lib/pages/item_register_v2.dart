@@ -67,26 +67,8 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
                 '정말 페이지를 나가시겠습니까? \n작성 중인 내용이 사라집니다.',
               ),
               actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(false),
-                  style: TextButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      )),
-                  child: const Text('취소'),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(true),
-                  style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Theme.of(context).colorScheme.tertiary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      )),
-                  child: const Text('확인'),
-                ),
+                cancelBotton(context),
+                confirmBotton(context),
               ],
             );
           },
@@ -172,6 +154,37 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
           ],
         ),
       ),
+    );
+  }
+
+  // 확인 버튼
+  TextButton confirmBotton(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        Navigator.pop(context);
+        Navigator.pop(context);
+      },
+      style: TextButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.tertiary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          )),
+      child: const Text('확인'),
+    );
+  }
+
+  // 취소 버튼
+  TextButton cancelBotton(BuildContext context) {
+    return TextButton(
+      onPressed: () => Navigator.of(context).pop(),
+      style: TextButton.styleFrom(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          )),
+      child: const Text('취소'),
     );
   }
 
@@ -426,29 +439,8 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
           style: TextStyle(fontSize: 14),
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            style: TextButton.styleFrom(
-                foregroundColor: Colors.black,
-                backgroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                )),
-            child: const Text('취소'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(true); // 팝업 닫기
-              Navigator.of(context).pop(); // 등록 페이지 닫기
-            },
-            style: TextButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Theme.of(context).colorScheme.tertiary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                )),
-            child: const Text("확인"),
-          )
+          cancelBotton(context),
+          confirmBotton(context),
         ],
       ),
     );
