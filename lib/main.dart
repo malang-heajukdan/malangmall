@@ -12,6 +12,8 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
+    // 우리 provider는 item이랑 cart 두 개가 있으니
+    // MultiProvider를 사용해서 여러 개의 provider를 등록해줍니당
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ItemProvider()),
@@ -50,6 +52,7 @@ class MyApp extends StatelessWidget {
       // home: ItemCart(),
     );
 
+    //home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
     //home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
   }
 }

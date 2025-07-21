@@ -4,19 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/models/item.dart';
 import 'package:flutter_application_1/provider/item_provider.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 
-class ItemRegister extends StatefulWidget {
-  const ItemRegister({super.key});
+class ItemRegisterV2 extends StatefulWidget {
+  const ItemRegisterV2({super.key});
 
   @override
-  State<ItemRegister> createState() => _ItemRegister();
+  State<ItemRegisterV2> createState() => _ItemRegisterV2();
 }
 
-class _ItemRegister extends State<ItemRegister> {
+class _ItemRegisterV2 extends State<ItemRegisterV2> {
   // 텍스트 필드 컨트롤러
   var nameController = TextEditingController();
   var priceController = TextEditingController();
@@ -54,59 +55,80 @@ class _ItemRegister extends State<ItemRegister> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("상품 등록"),
+        title: const Text("Add My Product"),
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
       ),
-      body: Column(
+      body: Stack(
         children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                selectImage(),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const SizedBox(width: 5),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 21, 10, 10),
-                      child: itemText("상품 이름"),
-                    ),
-                    const SizedBox(width: 5),
-                    Expanded(child: nameTextField()),
-                    const SizedBox(width: 5),
-                  ],
+          //selectImage(),
+          Padding(
+            padding: const EdgeInsets.only(top: 250),
+            child: SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Positioned(
+                left: 0,
+                top: 0,
+                child: Container(
+                  height: 300,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30)),
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const SizedBox(width: 5),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 21, 10, 10),
-                      child: itemText("상품 가격"),
-                    ),
-                    const SizedBox(width: 5),
-                    Expanded(child: priceTextField()),
-                    const SizedBox(width: 5),
-                  ],
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(17, 21, 10, 10),
-                    child: itemText("상품 설명"),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
-          Expanded(child: descriptionTextField()),
-          registerBotton(),
+          SafeArea(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints:
+                        BoxConstraints(minHeight: constraints.maxHeight),
+                    child: IntrinsicHeight(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          selectImage(),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 30, 10, 0),
+                            child: itemText("Name"),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(child: nameTextField()),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 21, 10, 0),
+                            child: itemText("Price(\$)"),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(child: priceTextField()),
+                            ],
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 21, 10, 0),
+                              child: itemText("Description"),
+                            ),
+                          ),
+                          Expanded(child: descriptionTextField()),
+                          registerBotton(),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
@@ -119,9 +141,9 @@ class _ItemRegister extends State<ItemRegister> {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 10),
         child: Container(
-          height: 250,
+          height: 240,
           width: double.infinity,
-          color: const Color(0xFF95C5D4),
+          color: Theme.of(context).colorScheme.tertiary,
           child: _image == null
               ? const Align(
                   alignment: Alignment.center,
@@ -153,7 +175,7 @@ class _ItemRegister extends State<ItemRegister> {
   // 상품 이름 텍스트 필드
   Padding nameTextField() {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.fromLTRB(17, 10, 17, 10),
       child: TextFormField(
         controller: nameController,
         style: const TextStyle(
@@ -165,7 +187,7 @@ class _ItemRegister extends State<ItemRegister> {
           }
           return null;
         },
-        cursorColor: const Color(0xFF95C5D4),
+        cursorColor: Colors.white,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: borderDecoration("상품 이름을 입력해주세요."),
       ),
@@ -175,27 +197,26 @@ class _ItemRegister extends State<ItemRegister> {
   // 상품 가격 텍스트 필드
   Widget priceTextField() {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.fromLTRB(17, 10, 17, 10),
       child: TextFormField(
         controller: priceController,
         style: const TextStyle(fontSize: 12),
-        cursorColor: const Color(0xFF95C5D4),
+        cursorColor: Colors.white,
         keyboardType: TextInputType.number,
         inputFormatters: [
-          FilteringTextInputFormatter.digitsOnly,
-          ThousandsSeparatorInputFormatter(),
+          DollarInputFormatter(),
         ],
         validator: (value) {
           if (value == null || value.isEmpty) {
             return "상품 가격은 비워둘 수 없습니다.";
           }
-          if (value.startsWith("0")) {
+          if (value.startsWith("\$0.00")) {
             return "상픔 가격은 0으로 시작할 수 없습니다.";
           }
           return null;
         },
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        decoration: borderDecoration("상품 가격을 입력해주세요.(단위:원)"),
+        decoration: borderDecoration("상품 가격을 입력해주세요.(단위:달러 예:12.34)"),
       ),
     );
   }
@@ -209,8 +230,8 @@ class _ItemRegister extends State<ItemRegister> {
         child: TextFormField(
           controller: descriptionController,
           style: const TextStyle(fontSize: 12),
-          cursorColor: const Color(0xFF95C5D4),
-          minLines: 10,
+          cursorColor: Colors.white,
+          minLines: 8,
           maxLines: null,
           textAlignVertical: TextAlignVertical.top,
           validator: (value) {
@@ -230,15 +251,23 @@ class _ItemRegister extends State<ItemRegister> {
   InputDecoration borderDecoration(String guideText) {
     return InputDecoration(
       hintText: guideText,
-      border: const OutlineInputBorder(),
-      enabledBorder: const OutlineInputBorder(
-        borderSide: BorderSide(color: Color(0xFF95C5D4)),
+      filled: true,
+      fillColor: Theme.of(context).colorScheme.primary,
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
       ),
-      focusedBorder: const OutlineInputBorder(
-        borderSide: BorderSide(color: Color(0xFF95C5D4)),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: BorderSide(
+          color: Theme.of(context).colorScheme.tertiary,
+          width: 1.3,
+        ),
       ),
-      errorBorder: const OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.pinkAccent),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: BorderSide(color: const Color.fromARGB(255, 255, 186, 209)),
       ),
     );
   }
@@ -251,13 +280,20 @@ class _ItemRegister extends State<ItemRegister> {
         _image != null);
   }
 
+  double cleanPrice(String text) {
+    // 쉼표 제거 → "1,234.56" → "1234.56"
+    String cleaned = text.replaceAll(RegExp(r'[^0-9.]'), '');
+    return double.tryParse(cleaned) ?? 0.0;
+  }
+
   // 상품 데이터 전달
   Item _submitForm() {
     String id = uuid.v4();
+
     final newItem = Item(
       id: id,
       name: nameController.text,
-      price: double.parse(priceController.text.replaceAll(",", "")),
+      price: cleanPrice(priceController.text),
       imagePath: _image!.path,
       description: descriptionController.text,
     );
@@ -280,7 +316,7 @@ class _ItemRegister extends State<ItemRegister> {
                         ? const Color(0xFF95c5d4)
                         : Colors.grey,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(10),
                     )),
                 child: const Text(
                   "등록하기",
@@ -348,36 +384,30 @@ class _ItemRegister extends State<ItemRegister> {
 }
 
 // 상품 가격 텍스트 필드 포매터
-class ThousandsSeparatorInputFormatter extends TextInputFormatter {
-  final NumberFormat _formatter = NumberFormat.decimalPattern();
+class DollarInputFormatter extends TextInputFormatter {
+  final NumberFormat _formatter =
+      NumberFormat.currency(locale: "en_US", symbol: "\$");
 
   @override
   TextEditingValue formatEditUpdate(
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    final oldText = oldValue.text;
-    final newText = newValue.text;
+    String digitsOnly = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
 
-    // 숫자만 추출 (콤마 제거)
-    String numericText = newText.replaceAll(RegExp(r'[^0-9]'), '');
-    if (numericText.isEmpty) {
-      return newValue.copyWith(text: '');
+    if (digitsOnly.isEmpty) {
+      return TextEditingValue(
+        text: '',
+        selection: TextSelection.collapsed(offset: 0),
+      );
     }
 
-    // 포맷 적용
-    String formatted = _formatter.format(int.parse(numericText));
-
-    // 커서 위치 계산
-    int selectionIndex =
-        formatted.length - (oldText.length - oldValue.selection.end);
-    selectionIndex = selectionIndex.clamp(0, formatted.length);
+    double value = double.parse(digitsOnly) / 100;
+    final newText = _formatter.format(value);
 
     return TextEditingValue(
-      text: formatted,
-      selection: TextSelection.collapsed(offset: selectionIndex),
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
     );
   }
 }
-
-// git 테스트
