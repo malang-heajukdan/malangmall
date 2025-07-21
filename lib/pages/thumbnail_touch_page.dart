@@ -3,7 +3,8 @@ import 'package:flutter_application_1/models/blinking_touch.dart';
 import 'package:flutter_application_1/pages/item_list.dart';
 
 class ThumbnailTouchPage extends StatelessWidget {
-  const ThumbnailTouchPage({super.key});
+  final String imagePath;
+  const ThumbnailTouchPage({super.key, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +21,13 @@ class ThumbnailTouchPage extends StatelessWidget {
           children: [
             Center(
               child: Image.asset(
-                'lib/assets/images/thumbnail_rec.png',
+                imagePath,
                 fit: BoxFit.contain,
                 width: MediaQuery.of(context).size.width,
               ),
             ),
             const Positioned(
-              bottom: 50,
+              bottom: 70,
               left: 0,
               right: 0,
               child: Center(child: BlinkingTouch(text: 'Touch!')),

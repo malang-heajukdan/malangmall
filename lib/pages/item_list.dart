@@ -97,21 +97,21 @@ class _ItemListState extends State<ItemList> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: SizedBox(
-                      height: 80,
+                      height: 140,
                       width: double.infinity,
                       child: GestureDetector(
-                        // 로고 클릭 시 홈('/')으로 이동
+                        // 로고 클릭 시 타임세일 전단으로 이동
                         onTap: () {
-                          Navigator.pushReplacementNamed(context, '/');
+                          Navigator.pushReplacementNamed(context, '/time_sale');
                         },
                         child: Center(
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Image.asset(
-                              'lib/assets/images/malang_banner.png',
-                              height: 350,
-                              width: 350,
+                              'lib/assets/images/sale_banner.png',
+                              height: 140,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
                             ),
                           ),
                         ),
@@ -121,8 +121,8 @@ class _ItemListState extends State<ItemList> {
                   const SizedBox(height: 12),
 
                   // 상품 그리드
-                  GridView.builder(
-                    // 그리드 뷰로 상품 목록 표시
+
+                  GridView.builder( // 그리드 뷰로 상품 목록 표시
                     shrinkWrap: true, // 부모 위젯의 크기에 맞게 조정
                     physics: const NeverScrollableScrollPhysics(), // 스크롤 비활성화
                     itemCount: items.length,
@@ -136,38 +136,40 @@ class _ItemListState extends State<ItemList> {
                     itemBuilder: (_, index) {
                       final item = items[index];
                       // 이미지 로딩 방식 분기 (assets 또는 File)
-                      final imageWidget =
-                          item.imagePath.contains('lib/assets/') // 로컬 이미지 경로 확인
-                              ? Image.asset(
-                                  item.imagePath,
-                                  fit: BoxFit.contain,
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                )
-                              : Image.file(
-                                  // 파일 경로 확인
-                                  File(item.imagePath),
-                                  fit: BoxFit.contain,
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                );
+
+                      final imageWidget = item.imagePath.contains('lib/assets/') // 로컬 이미지 경로 확인
+                          ? Image.asset(
+                              item.imagePath,
+                              fit: BoxFit.contain,
+                              width: double.infinity,
+                              height: double.infinity,
+                            )
+                          : Image.file( // 파일 경로 확인
+                              File(item.imagePath),
+                              fit: BoxFit.contain,
+                              width: double.infinity,
+                              height: double.infinity,
+                            );
 
                       return GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
+
                               builder: (_) => ItemDetail2(item: item),// 아이템 상세 페이지로 이동
                             ),
                           );
                         },
-                        child: Card( // 상품 카드
+                        child: Card(
+                          // 상품 카드
                           color: AppColors.surface,
                           elevation: 5,
                           shadowColor: AppColors.cardShadow,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
                           ),
+
                           child: Column( 
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -185,6 +187,7 @@ class _ItemListState extends State<ItemList> {
                               ),
                               const SizedBox(height: 12),
                               Padding(
+
                                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: Text(
                                   item.name,

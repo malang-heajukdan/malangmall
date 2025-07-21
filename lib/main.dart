@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Shopping Mall',
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.system,
       theme: lightTheme,
       // darkTheme: darkTheme,
       debugShowCheckedModeBanner: false,
@@ -46,10 +46,14 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/cart': (_) => const ItemCart(),
-        '/': (_) => const ThumbnailTouchPage(), // 초기화면 입력이 필요합니다.
+        '/': (_) => const ThumbnailTouchPage(
+            imagePath:
+                'lib/assets/images/thumbnail_final.png'), // 초기화면 입력이 필요합니다.
         '/register': (_) => const ItemRegisterV2(),
         '/detail': (_) => ItemDetail2(item: testItem),
         '/list': (_) => const ItemList(),
+        '/time_sale': (_) => const ThumbnailTouchPage(
+            imagePath: 'lib/assets/images/time_sale.png'),
       },
       // home: ItemCart(),
     );
