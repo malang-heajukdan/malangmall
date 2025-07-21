@@ -66,6 +66,7 @@ class _ItemCartState extends State<ItemCart> {
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: AppColors.onSurface, // 커스텀 컬러 사용
+
               ),
             ),
             actions: [
@@ -100,6 +101,7 @@ class _ItemCartState extends State<ItemCart> {
 
                               return Container(
                                 // 카드 스타일
+
                                 margin: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 8),
                                 padding: const EdgeInsets.all(16),
@@ -152,6 +154,7 @@ class _ItemCartState extends State<ItemCart> {
                                     //   ),
                                     // ),
 
+
                                     const SizedBox(width: 12),
                                     Expanded(
                                       //중간
@@ -161,6 +164,7 @@ class _ItemCartState extends State<ItemCart> {
                                         children: [
                                           Text(
                                             item['name'],
+
                                             style: const TextStyle(
                                                 fontSize: 24,
                                                 fontWeight: FontWeight.bold),
@@ -184,6 +188,7 @@ class _ItemCartState extends State<ItemCart> {
                                       children: [
                                         IconButton(
                                           onPressed: () => removeItem(index),
+
                                           icon: const Icon(Icons.clear,
                                               color: Color(0xFF95C5D4)),
                                         ),
@@ -198,6 +203,7 @@ class _ItemCartState extends State<ItemCart> {
                                                   }
                                                 });
                                               },
+
                                               icon: const Icon(
                                                 Icons.remove_circle,
                                                 color: Color(0xff95C5D4),
@@ -215,6 +221,7 @@ class _ItemCartState extends State<ItemCart> {
                                                   item['quantity']++;
                                                 });
                                               },
+
                                               icon: const Icon(
                                                 Icons.add_circle,
                                                 color: Color(0xff95C5D4),
@@ -235,6 +242,7 @@ class _ItemCartState extends State<ItemCart> {
                         // 하단 버튼
                         Container(
                           width: double.infinity,
+
                           padding: const EdgeInsets.symmetric(
                               vertical: 20, horizontal: 24),
                           decoration: const BoxDecoration(
@@ -247,6 +255,7 @@ class _ItemCartState extends State<ItemCart> {
                           child: SafeArea(
                             child: Row(
                               children: [
+
                                 const SizedBox(width: 12),
                                 Expanded(
                                   flex: 1,
@@ -264,6 +273,7 @@ class _ItemCartState extends State<ItemCart> {
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
+
                                       const SizedBox(height: 6),
                                       Text(
                                         '₩${getTotalPrice()}',
@@ -273,6 +283,7 @@ class _ItemCartState extends State<ItemCart> {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
+
                                       const SizedBox(
                                         height: 4,
                                       )
@@ -288,6 +299,7 @@ class _ItemCartState extends State<ItemCart> {
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(32),
                                       ),
+
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 16),
                                     ),
@@ -295,6 +307,7 @@ class _ItemCartState extends State<ItemCart> {
                                       showDialog(
                                         context: context,
                                         builder: (context) => AlertDialog(
+
                                           title: const Text('구매 완료'),
                                           content:
                                               const Text('구매가 성공적으로 완료되었습니다.'),
@@ -302,6 +315,7 @@ class _ItemCartState extends State<ItemCart> {
                                             TextButton(
                                               onPressed: () =>
                                                   Navigator.pop(context),
+
                                               child: const Center(
                                                 child: Text(
                                                   '확인',
@@ -324,6 +338,7 @@ class _ItemCartState extends State<ItemCart> {
                                     ),
                                   ),
                                 ),
+
                                 const SizedBox(
                                   width: 4,
                                 )

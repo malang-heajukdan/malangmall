@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_application_1/pages/item_cart.dart';
 import 'package:flutter_application_1/pages/item_detail2.dart';
 import 'package:flutter_application_1/pages/item_list.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
       // home: const ItemList(),
       initialRoute: '/',
       routes: {
+
         '/cart': (_) => const ItemCart(),
         '/': (_) => const ThumbnailTouchPage(), // 초기화면 입력이 필요합니다.
         '/register': (_) => const ItemRegister(),
@@ -54,5 +56,6 @@ class MyApp extends StatelessWidget {
     );
 
     //home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
+
   }
 }
