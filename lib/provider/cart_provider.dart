@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'item.dart'; // Item 모델 가져오기
+import '../models/item.dart'; // Item 모델 가져오기
 
 class CartProvider with ChangeNotifier {
   final List<Item> _cartItems = [];
