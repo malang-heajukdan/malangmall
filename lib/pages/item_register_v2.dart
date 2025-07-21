@@ -43,84 +43,125 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
   @override
   void initState() {
     super.initState();
-    nameController.addListener(() {
-      setState(() {});
-    });
-    priceController.addListener(() {
-      setState(() {});
-    });
+    nameController.addListener(_onTextChanged);
+    priceController.addListener(_onTextChanged);
+    descriptionController.addListener(_onTextChanged);
+  }
+
+  void _onTextChanged() {
+    setState(() {});
   }
 
   // 빌드 - * 레이아웃 디자인 나오면 맞춰서 수정해야함 *
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Add My Product"),
-        backgroundColor: Theme.of(context).colorScheme.tertiary,
-      ),
-      body: Stack(
-        children: [
-          //selectImage(),
-          Padding(
-            padding: const EdgeInsets.only(top: 250),
-            child: SizedBox(
-              width: double.infinity,
-              height: double.infinity,
-              child: Positioned(
-                left: 0,
-                top: 0,
-                child: Container(
-                  height: 300,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30)),
-                ),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        await showDialog<bool>(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('뒤로 가기'),
+              content: const Text(
+                '정말 페이지를 나가시겠습니까? \n작성 중인 내용이 사라집니다.',
               ),
-            ),
-          ),
-          SafeArea(
-            child: LayoutBuilder(
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  style: TextButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      )),
+                  child: const Text('취소'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  style: TextButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Theme.of(context).colorScheme.tertiary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      )),
+                  child: const Text('확인'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+      child: Scaffold(
+        //backgroundColor: Colors.white,
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.white),
+          centerTitle: true,
+          title: const Text("상품 등록"),
+          titleTextStyle:
+              const TextStyle(fontWeight: FontWeight.bold, fontSize: 21),
+          backgroundColor: Theme.of(context).colorScheme.tertiary,
+        ),
+        body: Stack(
+          children: [
+            //selectImage(),
+            LayoutBuilder(
               builder: (context, constraints) {
                 return SingleChildScrollView(
                   child: ConstrainedBox(
                     constraints:
                         BoxConstraints(minHeight: constraints.maxHeight),
                     child: IntrinsicHeight(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Stack(
                         children: [
                           selectImage(),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 30, 10, 0),
-                            child: itemText("Name"),
-                          ),
-                          Row(
+                          boderDecoration(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Expanded(child: nameTextField()),
+                              //selectImage(),
+                              const SizedBox(
+                                height: 240,
+                                width: double.infinity,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 30, 10, 0),
+                                child: itemText("상품명"),
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(child: nameTextField()),
+                                ],
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 21, 10, 0),
+                                child: itemText("가격"),
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(child: priceTextField()),
+                                ],
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(20, 21, 10, 0),
+                                  child: itemText("상품 상세"),
+                                ),
+                              ),
+                              Expanded(child: descriptionTextField()),
+                              SafeArea(
+                                  child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
+                                child: registerBotton(),
+                              )),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 21, 10, 0),
-                            child: itemText("Price(\$)"),
-                          ),
-                          Row(
-                            children: [
-                              Expanded(child: priceTextField()),
-                            ],
-                          ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 21, 10, 0),
-                              child: itemText("Description"),
-                            ),
-                          ),
-                          Expanded(child: descriptionTextField()),
-                          registerBotton(),
                         ],
                       ),
                     ),
@@ -128,8 +169,31 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
                 );
               },
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // 보더 UI용 속성
+  Padding boderDecoration() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 235),
+      child: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Positioned(
+          left: 0,
+          top: 0,
+          child: Container(
+            height: 30,
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30))),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -141,18 +205,21 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 10),
         child: Container(
-          height: 240,
+          height: 260,
           width: double.infinity,
           color: Theme.of(context).colorScheme.tertiary,
           child: _image == null
-              ? const Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "사진 선택",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+              ? const Padding(
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "사진 선택",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
                 )
               : Image.file(_image!, fit: BoxFit.cover),
@@ -183,13 +250,13 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
         ),
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return "상품 이름은 비워둘 수 없습니다.";
+            return "상품명은 비워둘 수 없습니다.";
           }
           return null;
         },
         cursorColor: Colors.white,
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        decoration: borderDecoration("상품 이름을 입력해주세요."),
+        decoration: borderDecoration("상품명을 입력해주세요."),
       ),
     );
   }
@@ -204,7 +271,7 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
         cursorColor: Colors.white,
         keyboardType: TextInputType.number,
         inputFormatters: [
-          DollarInputFormatter(),
+          ThousandsSeparatorInputFormatter(),
         ],
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -216,7 +283,7 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
           return null;
         },
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        decoration: borderDecoration("상품 가격을 입력해주세요.(단위:달러 예:12.34)"),
+        decoration: borderDecoration("상품 가격을 입력해주세요.(단위:원)"),
       ),
     );
   }
@@ -240,7 +307,7 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
             }
             return null;
           },
-          decoration: borderDecoration("상품 설명을 입력해주세요."),
+          decoration: borderDecoration("상품에 대한 설명을 작성해주세요."),
           autovalidateMode: AutovalidateMode.onUserInteraction,
         ),
       ),
@@ -267,7 +334,6 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
-
         borderSide: const BorderSide(color: Color.fromARGB(255, 255, 186, 209)),
       ),
     );
@@ -281,10 +347,12 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
         _image != null);
   }
 
-  double cleanPrice(String text) {
-    // 쉼표 제거 → "1,234.56" → "1234.56"
-    String cleaned = text.replaceAll(RegExp(r'[^0-9.]'), '');
-    return double.tryParse(cleaned) ?? 0.0;
+  // 버튼 클릭 시
+  void _onRegisterPressde() {
+    final itemProvider = Provider.of<ItemProvider>(context, listen: false);
+    itemProvider.addItem(_submitForm());
+
+    showDialogPopup();
   }
 
   // 상품 데이터 전달
@@ -294,7 +362,6 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
     final newItem = Item(
       id: id,
       name: nameController.text,
-
       price: int.parse(priceController.text.replaceAll(",", "")),
       imagePath: _image!.path,
       description: descriptionController.text,
@@ -320,6 +387,7 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     )),
+                onPressed: isPossibleRegister() ? _onRegisterPressde : null,
                 child: const Text(
                   "등록하기",
                   style: TextStyle(
@@ -328,14 +396,6 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                onPressed: () {
-                  final itemProvider =
-                      Provider.of<ItemProvider>(context, listen: false);
-                  itemProvider.addItem(_submitForm());
-
-                  // 등록 완료 팝업
-                  showDialogPopup();
-                },
               ),
             )),
       ),
@@ -350,31 +410,40 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
-        backgroundColor: Colors.white,
+        //backgroundColor: Colors.white,
         // 타이틀
         title: const Row(
           children: [
             Text(
-              "등록 완료",
+              "상품 등록",
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ],
         ),
         // 내용
         content: const Text(
-          "상품이 등록되었습니다.",
+          "상품을 등록하시겠습니까?",
           style: TextStyle(fontSize: 14),
         ),
         actions: [
           TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            style: TextButton.styleFrom(
+                foregroundColor: Colors.black,
+                backgroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                )),
+            child: const Text('취소'),
+          ),
+          TextButton(
             onPressed: () {
-              Navigator.of(context).pop(); // 팝업 닫기
+              Navigator.of(context).pop(true); // 팝업 닫기
               Navigator.of(context).pop(); // 등록 페이지 닫기
             },
             style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
-
-                backgroundColor: const Color(0xFF95c5d4),
+                backgroundColor: Theme.of(context).colorScheme.tertiary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 )),
@@ -387,31 +456,71 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
 }
 
 // 상품 가격 텍스트 필드 포매터
-class DollarInputFormatter extends TextInputFormatter {
-  final NumberFormat _formatter =
-      NumberFormat.currency(locale: "en_US", symbol: "\$");
+class ThousandsSeparatorInputFormatter extends TextInputFormatter {
+  final NumberFormat _formatter = NumberFormat.decimalPattern();
 
   @override
   TextEditingValue formatEditUpdate(
     TextEditingValue oldValue,
     TextEditingValue newValue,
   ) {
-    String digitsOnly = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+    final oldText = oldValue.text;
+    final newText = newValue.text;
 
-    if (digitsOnly.isEmpty) {
-
-      return const TextEditingValue(
-        text: '',
-        selection: TextSelection.collapsed(offset: 0),
-      );
+    // 숫자만 추출 (콤마 제거)
+    String numericText = newText.replaceAll(RegExp(r'[^0-9]'), '');
+    if (numericText.isEmpty) {
+      return newValue.copyWith(text: '');
     }
 
-    double value = double.parse(digitsOnly) / 100;
-    final newText = _formatter.format(value);
+    // 포맷 적용
+    String formatted = _formatter.format(int.parse(numericText));
+
+    // 커서 위치 계산
+    int selectionIndex =
+        formatted.length - (oldText.length - oldValue.selection.end);
+    selectionIndex = selectionIndex.clamp(0, formatted.length);
 
     return TextEditingValue(
-      text: newText,
-      selection: TextSelection.collapsed(offset: newText.length),
+      text: formatted,
+      selection: TextSelection.collapsed(offset: selectionIndex),
     );
   }
 }
+
+
+// 달러용
+// double cleanPrice(String text) {
+//   // 쉼표 제거 → "1,234.56" → "1234.56"
+//   String cleaned = text.replaceAll(RegExp(r'[^0-9.]'), '');
+//   return double.tryParse(cleaned) ?? 0.0;
+// }
+  
+// 상품 가격 텍스트 필드 포매터(달러)
+// class DollarInputFormatter extends TextInputFormatter {
+//   final NumberFormat _formatter =
+//       NumberFormat.currency(locale: "en_US", symbol: "\$");
+
+//   @override
+//   TextEditingValue formatEditUpdate(
+//     TextEditingValue oldValue,
+//     TextEditingValue newValue,
+//   ) {
+//     String digitsOnly = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+
+//     if (digitsOnly.isEmpty) {
+//       return const TextEditingValue(
+//         text: '',
+//         selection: TextSelection.collapsed(offset: 0),
+//       );
+//     }
+
+//     double value = double.parse(digitsOnly) / 100;
+//     final newText = _formatter.format(value);
+
+//     return TextEditingValue(
+//       text: newText,
+//       selection: TextSelection.collapsed(offset: newText.length),
+//     );
+//   }
+// }
