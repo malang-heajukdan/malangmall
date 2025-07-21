@@ -67,7 +67,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
                       alignment: Alignment.bottomCenter,
                       children: [
                         Image.asset(
-                          'lib/assets/images/background_reverse.png',
+                          'lib/assets/images/detail_bg.jpg',
                           height: screenHeight * 0.35,
                           width: double.infinity,
                           fit: BoxFit.cover,
