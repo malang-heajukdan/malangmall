@@ -39,17 +39,17 @@ class MyApp extends StatelessWidget {
       //home: const ItemList()); //초희 테스트
       // 초희님까지 끝나면!! 아래코드로 실행해주기!
       // home: const ItemList(),
-      // initialRoute: '/',
-      // routes: {
-      //   //'/cart': (_) => const CartPage(),
-      //   '/': (_) => ThumbnailTouchPage(), // 초기화면 입력이 필요합니다.
-      //   '/register': (_) => ItemRegister(),
-      //   '/detail': (_) => ItemDetail2(item: testItem),
-      //   '/list': (_) => ItemList(),
-      // },
-      home: ItemCart(),
+      initialRoute: '/',
+      routes: {
+        '/cart': (_) => ItemCart(),
+        '/': (_) => ThumbnailTouchPage(), // 초기화면 입력이 필요합니다.
+        '/register': (_) => ItemRegister(),
+        '/detail': (_) => ItemDetail2(item: testItem),
+        '/list': (_) => ItemList(),
+      },
+      // home: ItemCart(),
     );
 
-     //home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
+    //home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
   }
 }
