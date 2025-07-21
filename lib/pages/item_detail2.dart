@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/cart_provider.dart';
 import 'package:flutter_application_1/models/item.dart';
-// import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-// import '../models/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 class ItemDetail2 extends StatefulWidget {
   final Item item;
@@ -163,7 +163,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
                         height: screenHeight * 0.05,
                         child: IgnorePointer(
                           child: Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
@@ -192,8 +192,8 @@ class _ItemDetail2State extends State<ItemDetail2> {
         ),
         child: Container(
           height: 85,
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          decoration: const BoxDecoration(
             color: Colors.white,
           ),
           child: Row(
@@ -203,7 +203,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
                 flex: 3,
                 child: Container(
                   height: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 8), //오른쪽 여백
+                  margin: const EdgeInsets.symmetric(horizontal: 8), //가로 여백
                   child: ElevatedButton(
                     onPressed: () {
                       _showPurchaseDialog();
@@ -214,7 +214,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                     ),
-                    child: Text('Order Now',
+                    child: const Text('Order Now',
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold)),
                   ),
@@ -225,18 +225,23 @@ class _ItemDetail2State extends State<ItemDetail2> {
                 flex: 1,
                 child: Container(
                   height: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 8), // 왼쪽 여백
+                  margin: const EdgeInsets.symmetric(horizontal: 8), // 가로 여백
                   child: ElevatedButton(
                     onPressed: () {
-                      // 장바구니에 추가 로직
+                      _showAddToCartDialog(() {
+                        final cart = Provider.of<CartProvider>(context,
+                            listen:
+                                false); // 이 버튼은 cartprovider의 상태 변화에 상관없이 동일한 모습이므로, 다시 build되지 않게 listen: false로 설정했습니당
+                        cart.addToCart(widget.item, quantity);
+                      });
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: blue,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
-                      padding: EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(12),
                     ),
-                    child: Icon(Icons.shopping_cart_outlined,
+                    child: const Icon(Icons.shopping_cart_outlined,
                         color: Colors.white, size: 40),
                   ),
                 ),
@@ -263,19 +268,43 @@ class _ItemDetail2State extends State<ItemDetail2> {
     if (quantity > 1) setState(() => quantity--);
   }
 
+  /// ------------------------------------ ///
+  /// ------- 구매하기 관련 함수들!!  --------- ///
   void _showPurchaseDialog() {
     showCupertinoDialog(
       context: context,
       builder: (ctx) => CupertinoAlertDialog(
-        title: const Text('구매 확인'),
-        content: Text('${widget.item.name} ${quantity}개 구매하시겠어요?'),
+        title: Text('Confirm purchase:',
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF6B9DAD))),
+        content: Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: '\nAre you sure you want to buy\n ',
+                style: TextStyle(
+                    fontSize: 16, color: black3, fontWeight: FontWeight.bold),
+              ),
+              TextSpan(
+                text: '${quantity} * ${widget.item.name}?',
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
         actions: [
           CupertinoDialogAction(
-            child: const Text('취소', style: TextStyle(color: Colors.grey)),
+            child:
+                const Text('Maybe later', style: TextStyle(color: Colors.grey)),
             onPressed: () => Navigator.pop(ctx),
           ),
           CupertinoDialogAction(
-            child: const Text('확인', style: TextStyle(color: Colors.red)),
+            child: const Text('Let’s do it!!',
+                style: TextStyle(
+                    color: Color(0xFFF28A98), fontWeight: FontWeight.bold)),
             onPressed: () {
               Navigator.pop(ctx);
               _showCompleteDialog();
@@ -292,14 +321,91 @@ class _ItemDetail2State extends State<ItemDetail2> {
       builder: (ctx) {
         Future.delayed(const Duration(seconds: 1), () {
           if (Navigator.canPop(ctx)) Navigator.pop(ctx);
+          if (Navigator.canPop(ctx)) Navigator.pop(ctx); // 리스트로!
         });
         return const CupertinoAlertDialog(
-          title: Text('🎉 구매 완료 🎉'),
-          content: Text('감사합니다!'),
+          title: Text('🎉 Thank you! 🎉',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF6B9DAD))),
+          content: Text('Your purchase is complete ',
+              style: TextStyle(fontSize: 16)),
+        );
+      },
+    );
+  }
+
+  /// ------------------------------------ ///
+  /// ------- 장바구니 담기 관련 함수들!!  --------- ///
+  void _showAddToCartDialog(VoidCallback onConfirmAddToCart) {
+    showCupertinoDialog(
+      context: context,
+      builder: (ctx) => CupertinoAlertDialog(
+        title: Text(
+          'Add to cart 🛒',
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF6B9DAD)),
+        ),
+        content: Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: '${quantity} * ${widget.item.name}\n\n',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const TextSpan(
+                text: 'Sounds good to add this to your cart?',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          CupertinoDialogAction(
+            child: const Text('Not now', style: TextStyle(color: Colors.grey)),
+            onPressed: () => Navigator.pop(ctx),
+          ),
+          CupertinoDialogAction(
+            child: const Text('Yep!',
+                style: TextStyle(
+                    color: Color(0xFFF28A98), fontWeight: FontWeight.bold)),
+            onPressed: () {
+              Navigator.pop(ctx);
+              onConfirmAddToCart();
+              _showCompleteDialogCart();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showCompleteDialogCart() {
+    showCupertinoDialog(
+      context: context,
+      builder: (ctx) {
+        Future.delayed(const Duration(seconds: 1), () {
+          if (Navigator.canPop(ctx)) Navigator.pop(ctx);
+          if (Navigator.canPop(ctx)) Navigator.pop(ctx); // 리스트로!
+        });
+        return const CupertinoAlertDialog(
+          title: Text('🎉 Yayyy 🎉',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF6B9DAD))),
+          content: Text('Added to your cart!', style: TextStyle(fontSize: 16)),
         );
       },
     );
   }
 }
-
-//뀨뀨

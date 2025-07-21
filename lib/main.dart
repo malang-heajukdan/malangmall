@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/cart_provider.dart';
+import 'package:flutter_application_1/pages/item_cart.dart';
 import 'package:flutter_application_1/pages/item_detail.dart';
 import 'package:flutter_application_1/pages/item_list.dart';
 import 'package:flutter_application_1/pages/item_detail2.dart';
@@ -11,6 +12,8 @@ import 'package:provider/provider.dart';
 
 void main() {
   runApp(
+    // 우리 provider는 item이랑 cart 두 개가 있으니
+    // MultiProvider를 사용해서 여러 개의 provider를 등록해줍니당
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ItemProvider()),
@@ -40,7 +43,7 @@ class MyApp extends StatelessWidget {
       // home: const ItemList(),
       initialRoute: '/',
       routes: {
-        //'/cart': (_) => const CartPage(),
+        '/cart': (_) => const ItemCart(),
         '/': (_) => ThumbnailTouchPage(), // 초기화면 입력이 필요합니다.
         '/register': (_) => ItemRegister(),
         '/detail': (_) => ItemDetail2(item: testItem),
