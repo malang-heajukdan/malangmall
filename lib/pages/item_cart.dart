@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../styles/app_colors.dart';
 
-//대학원
 class ItemCart extends StatefulWidget {
   final Map<String, dynamic>? newItem;
 
