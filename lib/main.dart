@@ -18,14 +18,12 @@ void main() {
         ChangeNotifierProvider(create: (_) => ItemProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
       ],
-      child: const MyApp(),
+      child: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -44,14 +42,15 @@ class MyApp extends StatelessWidget {
       // home: const ItemList(),
       initialRoute: '/',
       routes: {
-        '/cart': (_) => const ItemCart(),
-        '/': (_) => const ThumbnailTouchPage(), // 초기화면 입력이 필요합니다.
-        '/register': (_) => const ItemRegister(),
+        '/cart': (_) => ItemCart(),
+        '/': (_) => ThumbnailTouchPage(), // 초기화면 입력이 필요합니다.
+        '/register': (_) => ItemRegister(),
         '/detail': (_) => ItemDetail2(item: testItem),
-        '/list': (_) => const ItemList(),
+        '/list': (_) => ItemList(),
       },
+      // home: ItemCart(),
     );
 
-    // home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
+    //home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
   }
 }
