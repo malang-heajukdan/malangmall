@@ -142,71 +142,81 @@ class _ItemListState extends State<ItemList> {
                               height: double.infinity,
                             );
 
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => ItemDetail2(item: item),// 아이템 상세 페이지로 이동
+                        return GestureDetector(
+                          onTap: () {
+                            // 상품 클릭 시 상세 페이지로 이동
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => ItemDetail2(item: item),
+                              ),
+                            );
+                          },
+                          child: Card(
+                            color: AppColors.surface,
+                            elevation: 5,
+                            shadowColor: AppColors.cardShadow,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
                             ),
-                          );
-                        },
-                        child: Card( // 상품 카드
-                          color: AppColors.surface,
-                          elevation: 5,
-                          shadowColor: AppColors.cardShadow,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Column( 
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Flexible(
-                                flex: 7,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ClipRRect(
-                                    borderRadius: const BorderRadius.vertical(
-                                      top: Radius.circular(16),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // 상품 이미지
+                                Flexible(
+                                  flex: 7,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.vertical(
+                                        top: Radius.circular(16),
+                                      ),
+                                      child: imageWidget,
                                     ),
-                                    child: imageWidget,
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 12),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Text(
-                                  item.name,
-                                  style: GoogleFonts.notoSans(
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 20,
-                                    color: AppColors.onSurface,
+
+                                const SizedBox(height: 12),
+
+                                // 상품 이름
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: Text(
+                                    item.name,
+                                    style: GoogleFonts.notoSans(
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 16,
+                                      color: AppColors.onSurface,
+                                    ),
+                                    textAlign: TextAlign.center,
                                   ),
-                                  textAlign: TextAlign.center,
                                 ),
-                              ),
-                              const SizedBox(height: 6),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Text(
-                                  item.price == 0
-                                      ? '무료' // 가격이 0인 경우
-                                      : '${_formatPrice(item.price)}원',// 가격 표시
-                                  style: GoogleFonts.notoSans(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 20,
-                                    color: AppColors.onSurface,
+
+                                const SizedBox(height: 6),
+
+                                // 가격 표시
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0),
+                                  child: Text(
+                                    '${_formatPrice(item.price)}원',
+                                    style: GoogleFonts.notoSans(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                      color: AppColors.onSurface,
+                                    ),
+                                    textAlign: TextAlign.center,
                                   ),
-                                  textAlign: TextAlign.center,
                                 ),
-                              ),
-                              const SizedBox(height: 8),
-                            ],
+
+                                const SizedBox(height: 8),
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),
