@@ -48,9 +48,13 @@ class ItemCart extends StatelessWidget {
                 color: AppColors.onSurface, // 커스텀 컬러 사용
               ),
             ),
+
             actions: [
               IconButton(
-                icon: const Icon(Icons.home_outlined),
+                icon: const Icon(
+                  Icons.home_outlined,
+                  size: 40,
+                ),
                 onPressed: () {
                   Navigator.pushNamed(context, '/list'); // 장바구니 페이지 이동
                 },
@@ -176,9 +180,6 @@ class ItemCart extends StatelessWidget {
                                                   cartItem.item.id,
                                                   cartItem.quantity - 1);
                                               // cartItem.quantity--;
-                                            } else {
-                                              cartProvider.removeFromCart(
-                                                  cartItem.item.id);
                                             }
                                           },
                                           icon: const Icon(
@@ -296,6 +297,7 @@ class ItemCart extends StatelessWidget {
                                       ],
                                     ),
                                   );
+                                  cartProvider.clearCart();
                                 },
                                 child: Text(
                                   '구매하기',
