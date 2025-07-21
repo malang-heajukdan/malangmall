@@ -39,11 +39,7 @@ class _ItemListState extends State<ItemList> {
 
   // 가격을 3자리마다 쉼표로 구분하는 함수
   String _formatPrice(int price) {
-  String _formatPrice(int price) {
     return price.toString().replaceAllMapped(
-          RegExp(r'(\d)(?=(\d{3})+(?!\d))'),
-          (match) => '${match[1]},',
-        );
           RegExp(r'(\d)(?=(\d{3})+(?!\d))'),
           (match) => '${match[1]},',
         );
@@ -54,10 +50,7 @@ class _ItemListState extends State<ItemList> {
     final items = Provider.of<ItemProvider>(context).items; // 아이템 목록 가져오기
     final items = Provider.of<ItemProvider>(context).items; // 아이템 목록 가져오기
 
-    return Scaffold(
-      // 스캐폴드 위젯으로 기본 레이아웃 구성
-      // 상단 AppBar
-      appBar: AppBar(
+
     return Scaffold(
       // 스캐폴드 위젯으로 기본 레이아웃 구성
       // 상단 AppBar
@@ -75,11 +68,16 @@ class _ItemListState extends State<ItemList> {
         ),
         actions: [
           IconButton(
-            // 장바구니 아이콘 버튼
-          IconButton(
+            // 홈 아이콘 버튼
+            icon: const Icon(Icons.home_outlined),
+            iconSize: 30,
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/'); // 홈으로 이동
+            },
+            color: AppColors.primary,
+          ),          IconButton(
             // 장바구니 아이콘 버튼
             icon: const Icon(Icons.shopping_cart_outlined),
-            iconSize: 30,
             iconSize: 30,
             onPressed: () {
               Navigator.pushNamed(context, '/cart');
@@ -89,13 +87,10 @@ class _ItemListState extends State<ItemList> {
           ),
         ],
         backgroundColor: AppColors.surface,
-        backgroundColor: AppColors.surface,
       ),
       // 본문 내용 (상품 리스트 or '상품 없음' 메시지)
       body: items.isEmpty
-          ? Center(
-              // 상품이 없을 때 표시할 위젯
-          ? Center(
+      ? Center(
               // 상품이 없을 때 표시할 위젯
               child: Text(
                 '상품이 없습니다.',
@@ -109,9 +104,7 @@ class _ItemListState extends State<ItemList> {
           : Padding(
               padding: const EdgeInsets.all(10),
               child: ListView(
-              child: ListView(
                 children: [
-                  // 스크롤 가능한 로고 영역
                   // 스크롤 가능한 로고 영역
                   Card(
                     color: AppColors.surface,
@@ -125,9 +118,7 @@ class _ItemListState extends State<ItemList> {
                       width: double.infinity,
                       child: GestureDetector(
                         // 로고 클릭 시 타임세일 전단으로 이동
-                        // 로고 클릭 시 타임세일 전단으로 이동
                         onTap: () {
-                          Navigator.pushReplacementNamed(context, '/time_sale');
                           Navigator.pushReplacementNamed(context, '/time_sale');
                         },
                         child: Center(
@@ -155,12 +146,9 @@ class _ItemListState extends State<ItemList> {
                     itemCount: items.length,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, // 2열로 배치
                       mainAxisSpacing: 12, // 수직 간격
                       crossAxisSpacing: 12, // 수평 간격
-                      childAspectRatio: 1.0, // 정사각형
                       childAspectRatio: 1.0, // 정사각형
                     ),
                     itemBuilder: (_, index) {
@@ -188,8 +176,7 @@ class _ItemListState extends State<ItemList> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) =>
-                                  ItemDetail2(item: item), // 아이템 상세 페이지로 이동
+
                               builder: (_) =>
                                   ItemDetail2(item: item), // 아이템 상세 페이지로 이동
                             ),
@@ -225,8 +212,6 @@ class _ItemListState extends State<ItemList> {
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 8.0),
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: Text(
                                   item.name,
                                   style: GoogleFonts.notoSans(
@@ -243,8 +228,8 @@ class _ItemListState extends State<ItemList> {
                                     const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: Text(
                                   item.price == 0
-                                      ? '무료'
-                                      : '${_formatPrice(item.price)}원', // 가격 표시
+                                      ? '무료' // 가격이 0인 경우
+                                      : '${_formatPrice(item.price)}원',// 가격 표시
                                   style: GoogleFonts.notoSans(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 20,
@@ -267,14 +252,8 @@ class _ItemListState extends State<ItemList> {
         data: Theme.of(context).copyWith(
           splashColor: Colors.transparent, // 터치 시 물결 효과 제거
           highlightColor: Colors.transparent, // 터치 시 하이라이트 효과 제거
-          splashColor: Colors.transparent, // 터치 시 물결 효과 제거
-          highlightColor: Colors.transparent, // 터치 시 하이라이트 효과 제거
           shadowColor: Colors.transparent, // 그림자 제거
         ),
-        child: FloatingActionButton.large(
-          // 상품 등록 버튼 .large 사용
-          backgroundColor: Colors.transparent, // 투명 배경
-          elevation: 0, // 그림자 제거
         child: FloatingActionButton.large(
           // 상품 등록 버튼 .large 사용
           backgroundColor: Colors.transparent, // 투명 배경
@@ -282,17 +261,14 @@ class _ItemListState extends State<ItemList> {
           onPressed: () async {
             await Navigator.pushNamed(context, '/register'); // 상품 등록 페이지로 이동
             _loadItems(); // 상품 목록 갱신
-            await Navigator.pushNamed(context, '/register'); // 상품 등록 페이지로 이동
-            _loadItems(); // 상품 목록 갱신
-          },
+          },          
           child: Image.asset(
-            'lib/assets/images/item_add.png', // 상품 등록 아이콘
             'lib/assets/images/item_add.png', // 상품 등록 아이콘
             width: 200,
             height: 200,
           ),
         ),
       ),
-    );
+    ); 
   }
 }
