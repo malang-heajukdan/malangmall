@@ -34,7 +34,7 @@ class _ItemListState extends State<ItemList> {
   }
 
   /// 가격을 천 단위 콤마로 포맷해주는 함수
-  String _formatPrice(double price) {
+  String _formatPrice(int price) {
     return price.toString().replaceAllMapped(
           RegExp(r'(\d)(?=(\d{3})+(?!\d))'),
           (match) => '${match[1]},',

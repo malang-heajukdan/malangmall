@@ -259,7 +259,7 @@ class _ItemRegister extends State<ItemRegister> {
     final newItem = Item(
       id: id,
       name: nameController.text,
-      price: double.parse(priceController.text.replaceAll(",", "")),
+      price: int.parse(priceController.text.replaceAll(",", "")),
       imagePath: _image!.path,
       description: descriptionController.text,
     );

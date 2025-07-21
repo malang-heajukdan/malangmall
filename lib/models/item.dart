@@ -5,7 +5,7 @@ class Item {
   final String name; // 상품 이름
   final String description; // 상품 설명
   final String imagePath; // 상품 이미지 경로 (assets/images/xxx.jpg)
-  final double price; // 상품 가격
+  final int price; // 상품 가격
   int quantity; // 장바구니에 담긴 수량 (기본값은 1)
 
   Item({
@@ -25,7 +25,7 @@ class Item {
     String? name,
     String? description,
     String? imagePath,
-    double? price,
+    int? price,
     int? quantity,
   }) {
     return Item(
