@@ -55,40 +55,36 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
   // 빌드 - * 레이아웃 디자인 나오면 맞춰서 수정해야함 *
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (didPop, result) async {
-        await showDialog<bool>(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('뒤로 가기'),
-              content: const Text(
-                '정말 페이지를 나가시겠습니까? \n작성 중인 내용이 사라집니다.',
+    return Scaffold(
+      //backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text("Add My Product"),
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
+      ),
+      body: Stack(
+        children: [
+          //selectImage(),
+          Padding(
+            padding: const EdgeInsets.only(top: 250),
+            child: SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Positioned(
+                left: 0,
+                top: 0,
+                child: Container(
+                  height: 300,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30)),
+                ),
               ),
-              actions: [
-                cancelBotton(context),
-                confirmBotton(context),
-              ],
-            );
-          },
-        );
-      },
-      child: Scaffold(
-        //backgroundColor: Colors.white,
-        resizeToAvoidBottomInset: true,
-        appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.white),
-          centerTitle: true,
-          title: const Text("상품 등록"),
-          titleTextStyle:
-              const TextStyle(fontWeight: FontWeight.bold, fontSize: 21),
-          backgroundColor: Theme.of(context).colorScheme.tertiary,
-        ),
-        body: Stack(
-          children: [
-            //selectImage(),
-            LayoutBuilder(
+            ),
+          ),
+          SafeArea(
+            child: LayoutBuilder(
               builder: (context, constraints) {
                 return SingleChildScrollView(
                   child: ConstrainedBox(
@@ -151,62 +147,8 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
                 );
               },
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // 확인 버튼
-  TextButton confirmBotton(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        Navigator.pop(context);
-        Navigator.pop(context);
-      },
-      style: TextButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: Theme.of(context).colorScheme.tertiary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          )),
-      child: const Text('확인'),
-    );
-  }
-
-  // 취소 버튼
-  TextButton cancelBotton(BuildContext context) {
-    return TextButton(
-      onPressed: () => Navigator.of(context).pop(),
-      style: TextButton.styleFrom(
-          foregroundColor: Colors.black,
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          )),
-      child: const Text('취소'),
-    );
-  }
-
-  // 보더 UI용 속성
-  Padding boderDecoration() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 235),
-      child: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Positioned(
-          left: 0,
-          top: 0,
-          child: Container(
-            height: 30,
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30))),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -439,8 +381,20 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
           style: TextStyle(fontSize: 14),
         ),
         actions: [
-          cancelBotton(context),
-          confirmBotton(context),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // 팝업 닫기
+              Navigator.of(context).pop(); // 등록 페이지 닫기
+            },
+            style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+
+                backgroundColor: const Color(0xFF95c5d4),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                )),
+            child: const Text("확인"),
+          )
         ],
       ),
     );
