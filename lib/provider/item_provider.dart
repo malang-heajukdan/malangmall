@@ -49,10 +49,10 @@ class ItemProvider with ChangeNotifier {
       name: '사과해요 나한테!',
       description:
           '만약 사과를 하려면 그쪽이 해야지, 나는 그쪽이 좋은데 그쪽은 내가 싫으니까, 싫어서 미안하다고 그쪽이 나한테 사과해야 되는 거 아니에요? 사과해요 나한테!',
-      imagePath: 'lib/assets/images/apolozi.jpeg',
+      imagePath: 'lib/assets/images/apolozi.png',
       price: 20000,
     ));
-        _items.add(Item(
+    _items.add(Item(
       id: 'mock_eng',
       name: 'Kinda Octopus',
       description:
@@ -60,7 +60,7 @@ class ItemProvider with ChangeNotifier {
       imagePath: 'lib/assets/images/octopus.png',
       price: 40,
     ));
-    
+
     _items.add(Item(
       id: 'mock_4',
       name: '대충 문어2',
@@ -77,7 +77,7 @@ class ItemProvider with ChangeNotifier {
       imagePath: 'lib/assets/images/squid.png',
       price: 15000,
     ));
-    _items.add(Item(                  
+    _items.add(Item(
       id: 'mock_5',
       name: '대충 문어3',
       description:
@@ -93,9 +93,6 @@ class ItemProvider with ChangeNotifier {
       imagePath: 'lib/assets/images/squid.png',
       price: 15000,
     ));
-  
-
-
   }
 
   Future<void> loadItems() async {}

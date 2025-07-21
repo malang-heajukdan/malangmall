@@ -131,36 +131,27 @@ class _ItemCartState extends State<ItemCart> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 IconButton(
-                                  onPressed: () => removeItem(index),
-                                  icon: Icon(Icons.delete_outline,
-                                      color: Colors.red),
+
+                                  // - 버튼: 수량 감소 
+                                  onPressed: () {
+                                    setState(() {
+                                     if (item['quantity'] > 1) {
+                                      item['quantity']--;
+                                    }
+                                  });
+                                }, 
+                                  icon: Icon(Icons.remove_circle_outline),
                                 ),
-                                SizedBox(height: 8),
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          if (item['quantity'] > 1) {
-                                            item['quantity']--;
-                                          }
-                                        });
-                                      },
-                                      icon: Icon(Icons.remove_circle_outline),
-                                    ),
-                                    Text(
-                                      '${item['quantity']}',
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          item['quantity']++;
-                                        });
-                                      },
-                                      icon: Icon(Icons.add_circle_outline),
-                                    ),
-                                  ],
+                                Text('${item['quantity']}'), // 현재 수량 표시하기
+                                IconButton(
+                                  // + 버튼: 수량 증가 기능
+                                  onPressed: () {
+                                    setState(() {
+                                      item['quantity']++;
+                                    });
+                                  }, 
+                                  icon: Icon(Icons.add_circle_outline),
+
                                 ),
                               ],
                             ),
