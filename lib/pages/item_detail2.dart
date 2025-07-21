@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/cart_provider.dart';
 import 'package:flutter_application_1/models/item.dart';
+import 'package:flutter_application_1/pages/item_cart.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -283,12 +284,12 @@ class _ItemDetail2State extends State<ItemDetail2> {
           TextSpan(
             children: [
               TextSpan(
-                text: '\nAre you sure you want to buy\n ',
+                text: '\nAre you sure \nyou want to buy.. ',
                 style: TextStyle(
                     fontSize: 16, color: black3, fontWeight: FontWeight.bold),
               ),
               TextSpan(
-                text: '${quantity} * ${widget.item.name}?',
+                text: '\n\n${quantity} * ${widget.item.name}?',
                 style:
                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
@@ -353,7 +354,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
           TextSpan(
             children: [
               TextSpan(
-                text: '${quantity} * ${widget.item.name}\n\n',
+                text: '\n ${quantity} * ${widget.item.name}\n\n',
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -393,17 +394,55 @@ class _ItemDetail2State extends State<ItemDetail2> {
     showCupertinoDialog(
       context: context,
       builder: (ctx) {
-        Future.delayed(const Duration(seconds: 1), () {
-          if (Navigator.canPop(ctx)) Navigator.pop(ctx);
-          if (Navigator.canPop(ctx)) Navigator.pop(ctx); // 리스트로!
-        });
-        return const CupertinoAlertDialog(
+        // Future.delayed(const Duration(seconds: 1), () {
+        //   if (Navigator.canPop(ctx)) Navigator.pop(ctx);
+        //   if (Navigator.canPop(ctx)) Navigator.pop(ctx); // 리스트로!
+        // });
+        return CupertinoAlertDialog(
           title: Text('🎉 Yayyy 🎉',
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF6B9DAD))),
-          content: Text('Added to your cart!', style: TextStyle(fontSize: 16)),
+          content: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              children: [
+                TextSpan(
+                    text: '\nAdded to your cart!',
+                    style: TextStyle(fontSize: 16, color: Color(0xFF242424))),
+                TextSpan(
+                    text: '\n\nCheck it out\nin the cart page 🛒',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF242424))),
+              ],
+            ),
+          ),
+          actions: [
+            CupertinoDialogAction(
+              child: const Text('Not now',
+                  style: TextStyle(
+                      color: Colors.grey, fontWeight: FontWeight.bold)),
+              onPressed: () {
+                Navigator.pop(ctx); // 다이얼로그 닫기
+                Navigator.pop(context, widget.item); // 이전 화면으로 아이템 정보 전달
+              },
+            ),
+            CupertinoDialogAction(
+              child: const Text('Take me there 🚀',
+                  style: TextStyle(
+                      color: Color(0xFFF28A98), fontWeight: FontWeight.bold)),
+              onPressed: () {
+                Navigator.pop(ctx); // 다이얼로그 닫기
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(builder: (_) => const ItemCart()),
+                );
+              },
+            ),
+          ],
         );
       },
     );
