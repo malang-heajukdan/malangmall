@@ -150,7 +150,7 @@ class ItemCart extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 8),
                                       Text(
-                                        '${_formatPrice(cartItem.item.price)}원',
+                                        '${_formatPrice(cartItem.item.price * cartItem.quantity)}원',
                                         style: const TextStyle(
                                             fontSize: 22,
                                             fontWeight: FontWeight.bold,
