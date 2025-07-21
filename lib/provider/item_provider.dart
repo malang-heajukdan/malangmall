@@ -31,11 +31,11 @@ class ItemProvider with ChangeNotifier {
     //앱 시작 시 몇 개의 상품을 미리 추가
     _items.add(Item(
       id: 'mock_1',
-      name: '대충 문어',
+      name: '공짜 문어',
       description:
           '이 문어는 영국에서 시작되어 행운을 부르는 문어입니다. 이 문어를 구매하고 나서 일주일 내에 지인에게 추천하지 않을 시 문어의 저주가 발생하여 머리가 문어처럼 반짝일 것입니다.',
       imagePath: 'lib/assets/images/octopus.png',
-      price: 18000,
+      price: 0,
     ));
     _items.add(Item(
       id: 'mock_2',
@@ -64,11 +64,11 @@ class ItemProvider with ChangeNotifier {
 
     _items.add(Item(
       id: 'mock_4',
-      name: '대충 문어2',
+      name: '대충 문어',
       description:
           '이 문어는 영국에서 시작되어 행운을 부르는 문어입니다. 이 문어를 구매하고 나서 일주일 내에 지인에게 추천하지 않을 시 문어의 저주가 발생하여 머리가 문어처럼 반짝일 것입니다.',
       imagePath: 'lib/assets/images/octopus.png',
-      price: 18000,
+      price: 128000,
     ));
     _items.add(Item(
       id: 'mock_5',
