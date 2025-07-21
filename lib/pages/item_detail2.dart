@@ -91,7 +91,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '\$${NumberFormat('#,##0.00').format(widget.item.price * quantity)}',
+                  '${NumberFormat('###,###').format(widget.item.price * quantity)}원',
                   style: const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
@@ -342,6 +342,12 @@ class _ItemDetail2State extends State<ItemDetail2> {
 
   /// ------------------------------------ ///
   /// ------- 장바구니 담기 관련 함수들!!  --------- ///
+  ///
+  void onConfirmAddToCart() {
+    Provider.of<CartProvider>(context, listen: false)
+        .addToCart(widget.item, quantity);
+  }
+
   void _showAddToCartDialog(VoidCallback onConfirmAddToCart) {
     showCupertinoDialog(
       context: context,
@@ -384,8 +390,10 @@ class _ItemDetail2State extends State<ItemDetail2> {
                     color: Color(0xFFF28A98), fontWeight: FontWeight.bold)),
             onPressed: () {
               Navigator.pop(ctx);
-              onConfirmAddToCart();
-              _showCompleteDialogCart();
+              Future.microtask(() {
+                onConfirmAddToCart();
+                _showCompleteDialogCart();
+              });
             },
           ),
         ],
@@ -430,7 +438,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
                       color: Colors.grey, fontWeight: FontWeight.bold)),
               onPressed: () {
                 Navigator.pop(ctx); // 다이얼로그 닫기
-                Navigator.pop(context, widget.item); // 이전 화면으로 아이템 정보 전달
+                // Navigator.pop(context, widget.item); // 이전 화면으로 아이템 정보 전달
               },
             ),
             CupertinoDialogAction(
