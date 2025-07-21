@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/pages/item_cart.dart';
 import 'package:flutter_application_1/pages/item_detail2.dart';
 import 'package:flutter_application_1/pages/item_list.dart';
-import 'package:flutter_application_1/pages/item_register.dart';
+import 'package:flutter_application_1/pages/item_register_v2.dart';
 import 'package:flutter_application_1/pages/thumbnail_touch_page.dart';
 import 'package:flutter_application_1/provider/cart_provider.dart';
 import 'package:flutter_application_1/provider/item_provider.dart';
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/cart': (_) => const ItemCart(),
         '/': (_) => const ThumbnailTouchPage(), // 초기화면 입력이 필요합니다.
-        '/register': (_) => const ItemRegister(),
+        '/register': (_) => const ItemRegisterV2(),
         '/detail': (_) => ItemDetail2(item: testItem),
         '/list': (_) => const ItemList(),
       },
