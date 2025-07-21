@@ -1,12 +1,13 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
+// 상품 모델과 상태 관리
+import '../provider/item_provider.dart';
 // 앱에서 정의한 커스텀 컬러셋
 import '../styles/app_colors.dart';
-// 상품 모델과 상태 관리
-import '../models/item.dart';
-import '../provider/item_provider.dart';
 // 상품 상세 페이지
 import 'item_detail2.dart';
 

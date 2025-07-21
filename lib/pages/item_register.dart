@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -5,9 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_1/models/item.dart';
 import 'package:flutter_application_1/provider/item_provider.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
-import 'package:intl/intl.dart';
 
 class ItemRegister extends StatefulWidget {
   const ItemRegister({super.key});

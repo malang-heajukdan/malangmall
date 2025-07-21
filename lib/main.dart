@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/cart_provider.dart';
 import 'package:flutter_application_1/pages/item_cart.dart';
-import 'package:flutter_application_1/pages/item_detail.dart';
-import 'package:flutter_application_1/pages/item_list.dart';
 import 'package:flutter_application_1/pages/item_detail2.dart';
+import 'package:flutter_application_1/pages/item_list.dart';
 import 'package:flutter_application_1/pages/item_register.dart';
 import 'package:flutter_application_1/pages/thumbnail_touch_page.dart';
+import 'package:flutter_application_1/provider/cart_provider.dart';
 import 'package:flutter_application_1/provider/item_provider.dart';
 import 'package:flutter_application_1/styles/theme.dart';
 import 'package:provider/provider.dart';
@@ -19,12 +18,14 @@ void main() {
         ChangeNotifierProvider(create: (_) => ItemProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -41,19 +42,16 @@ class MyApp extends StatelessWidget {
       //home: const ItemList()); //초희 테스트
       // 초희님까지 끝나면!! 아래코드로 실행해주기!
       // home: const ItemList(),
-
-      // initialRoute: '/',
-      // routes: {
-      //   //'/cart': (_) => const CartPage(),
-      //   '/': (_) => ThumbnailTouchPage(), // 초기화면 입력이 필요합니다.
-      //   '/register': (_) => ItemRegister(),
-      //   '/detail': (_) => ItemDetail2(item: testItem),
-      //   '/list': (_) => ItemList(),
-      // },
-      home: ItemCart(),
-
+      initialRoute: '/',
+      routes: {
+        '/cart': (_) => const ItemCart(),
+        '/': (_) => const ThumbnailTouchPage(), // 초기화면 입력이 필요합니다.
+        '/register': (_) => const ItemRegister(),
+        '/detail': (_) => ItemDetail2(item: testItem),
+        '/list': (_) => const ItemList(),
+      },
     );
 
-     //home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
+    // home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
   }
 }

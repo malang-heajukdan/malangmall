@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class ItemCart extends StatefulWidget {
   final Map<String, dynamic>? newItem;
@@ -52,7 +52,7 @@ class _ItemCartState extends State<ItemCart> {
       backgroundColor: Colors.white,
       // 상단 AppBar 만들기
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           '장바구니',
           style: TextStyle(fontSize: 20, color: Colors.black),
         ),
@@ -60,7 +60,7 @@ class _ItemCartState extends State<ItemCart> {
       ),
 
       body: isCartEmpty
-          ? Center(
+          ? const Center(
               child: Text(
                 '장바구니가 비었습니다.',
                 style: TextStyle(fontSize: 18, color: Colors.grey),
@@ -76,17 +76,17 @@ class _ItemCartState extends State<ItemCart> {
 
                       return Container(
                         // 카드 스타일
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        padding: EdgeInsets.all(16),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          border:
-                              Border.all(color: Color(0xFFD3E6EC), width: 2.5),
+                          border: Border.all(
+                              color: const Color(0xFFD3E6EC), width: 2.5),
                           borderRadius: BorderRadius.circular(24),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
+                              color: Colors.grey,
                               offset: Offset(2, 2),
                               blurRadius: 2,
                               spreadRadius: 2,
@@ -106,21 +106,21 @@ class _ItemCartState extends State<ItemCart> {
                               //   fit: BoxFit.cover,
                               // ),
                             ),
-                            SizedBox(width: 12),
+                            const SizedBox(width: 12),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     item['name'],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 28,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  SizedBox(height: 16),
+                                  const SizedBox(height: 16),
                                   Text(
                                     '₩${item['price']}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -131,16 +131,15 @@ class _ItemCartState extends State<ItemCart> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 IconButton(
-
-                                  // - 버튼: 수량 감소 
+                                  // - 버튼: 수량 감소
                                   onPressed: () {
                                     setState(() {
-                                     if (item['quantity'] > 1) {
-                                      item['quantity']--;
-                                    }
-                                  });
-                                }, 
-                                  icon: Icon(Icons.remove_circle_outline),
+                                      if (item['quantity'] > 1) {
+                                        item['quantity']--;
+                                      }
+                                    });
+                                  },
+                                  icon: const Icon(Icons.remove_circle_outline),
                                 ),
                                 Text('${item['quantity']}'), // 현재 수량 표시하기
                                 IconButton(
@@ -149,9 +148,8 @@ class _ItemCartState extends State<ItemCart> {
                                     setState(() {
                                       item['quantity']++;
                                     });
-                                  }, 
-                                  icon: Icon(Icons.add_circle_outline),
-
+                                  },
+                                  icon: const Icon(Icons.add_circle_outline),
                                 ),
                               ],
                             ),
@@ -165,8 +163,9 @@ class _ItemCartState extends State<ItemCart> {
                 // 하단 버튼
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 24),
-                  decoration: BoxDecoration(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
+                  decoration: const BoxDecoration(
                     color: Colors.blueAccent,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(40),
@@ -181,17 +180,17 @@ class _ItemCartState extends State<ItemCart> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 '총 가격',
                                 style: TextStyle(
                                   color: Colors.white70,
                                   fontSize: 14,
                                 ),
                               ),
-                              SizedBox(height: 6),
+                              const SizedBox(height: 6),
                               Text(
-                                '₩${getTotalPrice()}',
-                                style: TextStyle(
+                                '₩${NumberFormat('###,###').format(getTotalPrice())}',
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
@@ -209,24 +208,24 @@ class _ItemCartState extends State<ItemCart> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(24),
                               ),
-                              padding: EdgeInsets.symmetric(vertical: 16),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
                             ),
                             onPressed: () {
                               showDialog(
                                 context: context,
                                 builder: (context) => AlertDialog(
-                                  title: Text('구매 완료'),
-                                  content: Text('구매가 성공적으로 완료되었습니다.'),
+                                  title: const Text('구매 완료'),
+                                  content: const Text('구매가 성공적으로 완료되었습니다.'),
                                   actions: [
                                     TextButton(
                                       onPressed: () => Navigator.pop(context),
-                                      child: Text('확인'),
+                                      child: const Text('확인'),
                                     )
                                   ],
                                 ),
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               '구매하기',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),

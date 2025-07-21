@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class BlinkingTouch extends StatefulWidget {
   final String text;
-  const BlinkingTouch({Key? key, required this.text}) : super(key: key);
+  const BlinkingTouch({super.key, required this.text});
 
   @override
-  _BlinkingTouchState createState() => _BlinkingTouchState();
+  BlinkingTouchState createState() => BlinkingTouchState();
 }
 
-class _BlinkingTouchState extends State<BlinkingTouch>
+class BlinkingTouchState extends State<BlinkingTouch>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
