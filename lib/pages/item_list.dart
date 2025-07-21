@@ -208,9 +208,8 @@ class _ItemListState extends State<ItemList> {
                                     const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: Text(
                                   item.price == 0
-                                      ? '무료'
-                                      : '${_formatPrice(item.price)}원', // 가격 표시
-
+                                      ? '무료' // 가격이 0인 경우
+                                      : '${_formatPrice(item.price)}원',// 가격 표시
                                   style: GoogleFonts.notoSans(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 20,
