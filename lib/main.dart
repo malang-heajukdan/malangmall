@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/provider/cart_provider.dart';
+
 import 'package:flutter_application_1/pages/item_cart.dart';
-import 'package:flutter_application_1/pages/item_detail.dart';
-import 'package:flutter_application_1/pages/item_list.dart';
 import 'package:flutter_application_1/pages/item_detail2.dart';
+import 'package:flutter_application_1/pages/item_list.dart';
 import 'package:flutter_application_1/pages/item_register.dart';
 import 'package:flutter_application_1/pages/thumbnail_touch_page.dart';
+import 'package:flutter_application_1/provider/cart_provider.dart';
 import 'package:flutter_application_1/provider/item_provider.dart';
 import 'package:flutter_application_1/styles/theme.dart';
 import 'package:provider/provider.dart';
@@ -19,12 +19,14 @@ void main() {
         ChangeNotifierProvider(create: (_) => ItemProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -43,16 +45,17 @@ class MyApp extends StatelessWidget {
       // home: const ItemList(),
       initialRoute: '/',
       routes: {
-        '/cart': (_) => ItemCart(),
-        '/': (_) => ThumbnailTouchPage(), // 초기화면 입력이 필요합니다.
-        '/register': (_) => ItemRegister(),
+
+        '/cart': (_) => const ItemCart(),
+        '/': (_) => const ThumbnailTouchPage(), // 초기화면 입력이 필요합니다.
+        '/register': (_) => const ItemRegister(),
         '/detail': (_) => ItemDetail2(item: testItem),
-        '/list': (_) => ItemList(),
+        '/list': (_) => const ItemList(),
       },
       // home: ItemCart(),
     );
 
     //home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
-    //home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
+
   }
 }

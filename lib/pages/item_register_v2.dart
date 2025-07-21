@@ -267,7 +267,8 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
-        borderSide: BorderSide(color: const Color.fromARGB(255, 255, 186, 209)),
+
+        borderSide: const BorderSide(color: Color.fromARGB(255, 255, 186, 209)),
       ),
     );
   }
@@ -293,7 +294,8 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
     final newItem = Item(
       id: id,
       name: nameController.text,
-      price: cleanPrice(priceController.text),
+
+      price: int.parse(priceController.text.replaceAll(",", "")),
       imagePath: _image!.path,
       description: descriptionController.text,
     );
@@ -371,7 +373,8 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
             },
             style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
-                backgroundColor: Color(0xFF95c5d4),
+
+                backgroundColor: const Color(0xFF95c5d4),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 )),
@@ -396,7 +399,8 @@ class DollarInputFormatter extends TextInputFormatter {
     String digitsOnly = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
 
     if (digitsOnly.isEmpty) {
-      return TextEditingValue(
+
+      return const TextEditingValue(
         text: '',
         selection: TextSelection.collapsed(offset: 0),
       );

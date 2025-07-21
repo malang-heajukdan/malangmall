@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/cart_provider.dart';
 import 'package:flutter_application_1/models/item.dart';
 import 'package:flutter_application_1/pages/item_cart.dart';
+import 'package:flutter_application_1/provider/cart_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -73,7 +73,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
                   alignment: Alignment.topCenter,
                   child: Text(
                     widget.item.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF242424),
@@ -92,7 +92,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
               children: [
                 Text(
                   '\$${NumberFormat('#,##0.00').format(widget.item.price * quantity)}',
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF242424)),
@@ -257,7 +257,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
   Widget _quantityButton(IconData icon, VoidCallback onPressed) {
     return IconButton(
       onPressed: onPressed,
-      icon: Icon(icon, color: Color(0xFF242424)),
+      icon: Icon(icon, color: const Color(0xFF242424)),
     );
   }
 
@@ -275,7 +275,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
     showCupertinoDialog(
       context: context,
       builder: (ctx) => CupertinoAlertDialog(
-        title: Text('Confirm purchase:',
+        title: const Text('Confirm purchase:',
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -289,7 +289,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
                     fontSize: 16, color: black3, fontWeight: FontWeight.bold),
               ),
               TextSpan(
-                text: '\n\n${quantity} * ${widget.item.name}?',
+                text: '\n\n$quantity * ${widget.item.name}?',
                 style:
                     const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
@@ -321,9 +321,12 @@ class _ItemDetail2State extends State<ItemDetail2> {
       context: context,
       builder: (ctx) {
         Future.delayed(const Duration(seconds: 1), () {
-          if (Navigator.canPop(ctx)) Navigator.pop(ctx);
-          if (Navigator.canPop(ctx)) Navigator.pop(ctx); // 리스트로!
+          if (ctx.mounted) {
+            if (Navigator.canPop(ctx)) Navigator.pop(ctx);
+            if (Navigator.canPop(ctx)) Navigator.pop(ctx); // 리스트로!
+          }
         });
+
         return const CupertinoAlertDialog(
           title: Text('🎉 Thank you! 🎉',
               style: TextStyle(
@@ -343,7 +346,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
     showCupertinoDialog(
       context: context,
       builder: (ctx) => CupertinoAlertDialog(
-        title: Text(
+        title: const Text(
           'Add to cart 🛒',
           style: TextStyle(
               fontSize: 20,
@@ -354,7 +357,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
           TextSpan(
             children: [
               TextSpan(
-                text: '\n ${quantity} * ${widget.item.name}\n\n',
+                text: '\n $quantity * ${widget.item.name}\n\n',
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -399,14 +402,14 @@ class _ItemDetail2State extends State<ItemDetail2> {
         //   if (Navigator.canPop(ctx)) Navigator.pop(ctx); // 리스트로!
         // });
         return CupertinoAlertDialog(
-          title: Text('🎉 Yayyy 🎉',
+          title: const Text('🎉 Yayyy 🎉',
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF6B9DAD))),
           content: RichText(
             textAlign: TextAlign.center,
-            text: TextSpan(
+            text: const TextSpan(
               children: [
                 TextSpan(
                     text: '\nAdded to your cart!',

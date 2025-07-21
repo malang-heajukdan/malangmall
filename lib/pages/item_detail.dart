@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/item.dart';
-import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 class ItemDetail extends StatefulWidget {
@@ -96,7 +95,7 @@ class _ItemDetailState extends State<ItemDetail> {
                       fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  '${formattedPrice}원',
+                  '$formattedPrice원',
                   style: TextStyle(
                       fontSize: 20, fontWeight: FontWeight.bold, color: black3),
                 ),
@@ -183,7 +182,7 @@ class _ItemDetailState extends State<ItemDetail> {
               BoxShadow(
                 color: Colors.grey.shade300,
                 blurRadius: 5,
-                offset: Offset(0, 0),
+                offset: const Offset(0, 0),
               ),
             ],
           ),
@@ -386,8 +385,10 @@ class _ItemDetailState extends State<ItemDetail> {
       context: context,
       builder: (ctx) {
         Future.delayed(const Duration(milliseconds: 1500), () {
-          if (Navigator.canPop(ctx)) {
-            Navigator.pop(ctx);
+          if (ctx.mounted) {
+            if (Navigator.canPop(ctx)) {
+              Navigator.pop(ctx);
+            }
           }
         });
         return const CupertinoAlertDialog(
