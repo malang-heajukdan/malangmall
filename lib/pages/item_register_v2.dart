@@ -55,31 +55,16 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
   // 빌드 - * 레이아웃 디자인 나오면 맞춰서 수정해야함 *
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Add My Product"),
-        backgroundColor: Theme.of(context).colorScheme.tertiary,
-      ),
-      body: Stack(
-        children: [
-          //selectImage(),
-          Padding(
-            padding: const EdgeInsets.only(top: 250),
-            child: SizedBox(
-              width: double.infinity,
-              height: double.infinity,
-              child: Positioned(
-                left: 0,
-                top: 0,
-                child: Container(
-                  height: 300,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30)),
-                ),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        await showDialog<bool>(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('뒤로 가기'),
+              content: const Text(
+                '정말 페이지를 나가시겠습니까? \n작성 중인 내용이 사라집니다.',
               ),
               actions: [
                 cancelBotton(context),
@@ -221,7 +206,7 @@ class _ItemRegisterV2 extends State<ItemRegisterV2> {
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30))),
           ),
-        ],
+        ),
       ),
     );
   }

@@ -61,144 +61,139 @@ class _ItemDetail2State extends State<ItemDetail2> {
                 // color: blue,
               ),
               SingleChildScrollView(
-                child: IntrinsicHeight(
-                  child: Column(
-                    children: [
-                      // 이미지 + 상품명
-                      Container(
-                        height: screenHeight * 0.35,
-                        width: double.infinity,
-                        decoration: const BoxDecoration(
-                            // color: blue,
+                child: Column(
+                  children: [
+                    // 이미지 + 상품명
+                    Container(
+                      height: screenHeight * 0.35,
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                          // color: blue,
+                          ),
+                      child: Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          // Image.asset(
+                          //   'lib/assets/images/detail_bg.jpg',
+                          //   height: screenHeight * 0.35,
+                          //   width: double.infinity,
+                          //   fit: BoxFit.cover,
+                          // ),
+                          Image.asset(
+                            widget.item.imagePath,
+                            height: screenHeight * 0.3,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) =>
+                                const Icon(Icons.image_not_supported),
+                          ),
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Text(
+                              widget.item.name,
+                              style: GoogleFonts.notoSans(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                                color: const Color(0xFF242424),
+                              ),
                             ),
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            // Image.asset(
-                            //   'lib/assets/images/detail_bg.jpg',
-                            //   height: screenHeight * 0.35,
-                            //   width: double.infinity,
-                            //   fit: BoxFit.cover,
-                            // ),
-                            Image.asset(
-                              widget.item.imagePath,
-                              height: screenHeight * 0.3,
-                              fit: BoxFit.cover,
-                              errorBuilder: (_, __, ___) =>
-                                  const Icon(Icons.image_not_supported),
-                            ),
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Text(
-                                widget.item.name,
-                                style: GoogleFonts.notoSans(
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
-                                  color: const Color(0xFF242424),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // 이미지 아래 모든 콘텐츠를 감싸는 흰색 Container
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.white,
+                      ),
+                      child: Column(
+                        children: [
+                          // 가격 + 수량 선택
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  widget.item.price == 0
+                                      ? '무료'
+                                      : '${NumberFormat('###,###').format(widget.item.price * quantity)}원',
+                                  style: GoogleFonts.notoSans(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                      color: const Color(0xFF242424)),
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      // 이미지 아래 모든 콘텐츠를 감싸는 흰색 Container
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Colors.white,
-                        ),
-                        child: Column(
-                          children: [
-                            // 가격 + 수량 선택
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 20),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    widget.item.price == 0
-                                        ? '무료'
-                                        : '${NumberFormat('###,###').format(widget.item.price * quantity)}원',
-                                    style: GoogleFonts.notoSans(
-                                        fontSize: 32,
-                                        fontWeight: FontWeight.bold,
-                                        color: const Color(0xFF242424)),
-                                  ),
-                                  Row(
-                                    children: [
-                                      _quantityButton(
-                                          Icons.remove, _decreaseQuantity),
-                                      Container(
-                                        width: 40,
-                                        height: 40,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: Text(
-                                          '$quantity',
-                                          style: GoogleFonts.notoSans(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: const Color(0xFF242424)),
-                                        ),
+                                Row(
+                                  children: [
+                                    _quantityButton(
+                                        Icons.remove, _decreaseQuantity),
+                                    Container(
+                                      width: 40,
+                                      height: 40,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                      _quantityButton(
-                                          Icons.add, _increaseQuantity),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                      child: Text(
+                                        '$quantity',
+                                        style: GoogleFonts.notoSans(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: const Color(0xFF242424)),
+                                      ),
+                                    ),
+                                    _quantityButton(
+                                        Icons.add, _increaseQuantity),
+                                  ],
+                                ),
+                              ],
                             ),
+                          ),
 
-                            // 설명 영역
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 30),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('상품 상세',
-                                      style: GoogleFonts.notoSans(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: black3)),
-                                  const SizedBox(height: 6),
-                                  Container(
-                                    height: screenHeight * 0.25,
-                                    // padding: const EdgeInsets.all(12),
-                                    decoration: BoxDecoration(
-                                      // color: Colors.white,
-                                      borderRadius: BorderRadius.circular(15),
-                                      // boxShadow: [
-                                      //   BoxShadow(
-                                      //     color: Colors.grey.shade100,
-                                      //     blurRadius: 5,
-                                      //     offset: const Offset(0, -2),
-                                      //   )
-                                      // ],
-                                    ),
-                                    child: Text(
-                                      widget.item.description,
-                                      style: GoogleFonts.notoSans(fontSize: 16),
-                                    ),
+                          // 설명 영역
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('상품 상세',
+                                    style: GoogleFonts.notoSans(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: black3)),
+                                const SizedBox(height: 6),
+                                Container(
+                                  alignment: Alignment.topLeft,
+                                  // height: screenHeight * 0.6,
+                                  // padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    // color: Colors.white,
+                                    borderRadius: BorderRadius.circular(15),
+                                    // boxShadow: [
+                                    //   BoxShadow(
+                                    //     color: Colors.grey.shade100,
+                                    //     blurRadius: 5,
+                                    //     offset: const Offset(0, -2),
+                                    //   )
+                                    // ],
                                   ),
-                                  const SizedBox(height: 20),
-                                ],
-                              ),
+                                  child: Text(
+                                    widget.item.description,
+                                    style: GoogleFonts.notoSans(fontSize: 16),
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                              ],
                             ),
-                            const SizedBox(
-                                height: 50), // 하단 버튼 영역을 위해 충분한 여백 추가
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 50), // 하단 버튼 영역을 위해 충분한 여백 추가
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ), ////// ㅇ<<<<<
               Positioned(

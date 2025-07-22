@@ -23,8 +23,6 @@ class _ItemListState extends State<ItemList> {
   Future<void> _loadItems() async {
     await Provider.of<ItemProvider>(context, listen: false)
         .loadItems(); // 상태 업데이트
-    await Provider.of<ItemProvider>(context, listen: false)
-        .loadItems(); // 상태 업데이트
   }
 
   //초기 화면 진입 시 목록 로드
@@ -48,8 +46,6 @@ class _ItemListState extends State<ItemList> {
   @override
   Widget build(BuildContext context) {
     final items = Provider.of<ItemProvider>(context).items; // 아이템 목록 가져오기
-    final items = Provider.of<ItemProvider>(context).items; // 아이템 목록 가져오기
-
 
     return Scaffold(
       // 스캐폴드 위젯으로 기본 레이아웃 구성
@@ -62,20 +58,10 @@ class _ItemListState extends State<ItemList> {
             fontSize: 20,
             fontWeight: FontWeight.w900,
             color: AppColors.primary,
-            fontWeight: FontWeight.w900,
-            color: AppColors.primary,
           ),
         ),
         actions: [
           IconButton(
-            // 홈 아이콘 버튼
-            icon: const Icon(Icons.home_outlined),
-            iconSize: 30,
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/'); // 홈으로 이동
-            },
-            color: AppColors.primary,
-          ),          IconButton(
             // 장바구니 아이콘 버튼
             icon: const Icon(Icons.shopping_cart_outlined),
             iconSize: 30,
@@ -90,7 +76,7 @@ class _ItemListState extends State<ItemList> {
       ),
       // 본문 내용 (상품 리스트 or '상품 없음' 메시지)
       body: items.isEmpty
-      ? Center(
+          ? Center(
               // 상품이 없을 때 표시할 위젯
               child: Text(
                 '상품이 없습니다.',
@@ -113,7 +99,6 @@ class _ItemListState extends State<ItemList> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: SizedBox(
-                      height: 140,
                       height: 140,
                       width: double.infinity,
                       child: GestureDetector(
@@ -176,14 +161,11 @@ class _ItemListState extends State<ItemList> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-
                               builder: (_) =>
                                   ItemDetail2(item: item), // 아이템 상세 페이지로 이동
                             ),
                           );
                         },
-                        child: Card(
-                          // 상품 카드
                         child: Card(
                           // 상품 카드
                           color: AppColors.surface,
@@ -261,7 +243,7 @@ class _ItemListState extends State<ItemList> {
           onPressed: () async {
             await Navigator.pushNamed(context, '/register'); // 상품 등록 페이지로 이동
             _loadItems(); // 상품 목록 갱신
-          },          
+          },
           child: Image.asset(
             'lib/assets/images/item_add.png', // 상품 등록 아이콘
             width: 200,
