@@ -167,7 +167,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
                                 const SizedBox(height: 6),
                                 Container(
                                   alignment: Alignment.topLeft,
-                                  height: screenHeight * 0.25,
+                                  // height: screenHeight * 0.6,
                                   // padding: const EdgeInsets.all(12),
                                   decoration: BoxDecoration(
                                     // color: Colors.white,
