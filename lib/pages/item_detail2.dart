@@ -33,7 +33,6 @@ class _ItemDetail2State extends State<ItemDetail2> {
 
     // 화면 크기 가져오기
     final screenHeight = MediaQuery.of(context).size.height;
-    // final screenWidth = MediaQuery.of(context).size.width;
 
     return Stack(
       children: [
@@ -73,12 +72,6 @@ class _ItemDetail2State extends State<ItemDetail2> {
                       child: Stack(
                         alignment: Alignment.bottomCenter,
                         children: [
-                          // Image.asset(
-                          //   'lib/assets/images/detail_bg.jpg',
-                          //   height: screenHeight * 0.35,
-                          //   width: double.infinity,
-                          //   fit: BoxFit.cover,
-                          // ),
                           Image.asset(
                             widget.item.imagePath,
                             height: screenHeight * 0.3,
@@ -167,18 +160,8 @@ class _ItemDetail2State extends State<ItemDetail2> {
                                 const SizedBox(height: 6),
                                 Container(
                                   alignment: Alignment.topLeft,
-                                  // height: screenHeight * 0.6,
-                                  // padding: const EdgeInsets.all(12),
                                   decoration: BoxDecoration(
-                                    // color: Colors.white,
                                     borderRadius: BorderRadius.circular(15),
-                                    // boxShadow: [
-                                    //   BoxShadow(
-                                    //     color: Colors.grey.shade100,
-                                    //     blurRadius: 5,
-                                    //     offset: const Offset(0, -2),
-                                    //   )
-                                    // ],
                                   ),
                                   child: Text(
                                     widget.item.description,
@@ -195,7 +178,7 @@ class _ItemDetail2State extends State<ItemDetail2> {
                     ),
                   ],
                 ),
-              ), ////// ㅇ<<<<<
+              ),
               Positioned(
                 left: 0,
                 right: 0,
@@ -442,10 +425,6 @@ class _ItemDetail2State extends State<ItemDetail2> {
     showCupertinoDialog(
       context: context,
       builder: (ctx) {
-        // Future.delayed(const Duration(seconds: 1), () {
-        //   if (Navigator.canPop(ctx)) Navigator.pop(ctx);
-        //   if (Navigator.canPop(ctx)) Navigator.pop(ctx); // 리스트로!
-        // });
         return CupertinoAlertDialog(
           title: Text('장바구니에 담겼습니다!',
               style: GoogleFonts.notoSans(
@@ -456,16 +435,6 @@ class _ItemDetail2State extends State<ItemDetail2> {
             textAlign: TextAlign.center,
             text: TextSpan(
               children: [
-                // TextSpan(
-                //     text: '\n장바구니에 담겼습니다!',
-                //     style: GoogleFonts.notoSans(
-                //         fontSize: 16, color: const Color(0xFF242424))),
-                // TextSpan(
-                //     text: '\n지금 확인해보세요 🛒',
-                //     style: GoogleFonts.notoSans(
-                //         fontSize: 16,
-                //         fontWeight: FontWeight.bold,
-                //         color: const Color(0xFF242424))),
                 TextSpan(
                     text: '\n지금 확인해보세요 🛒',
                     style: GoogleFonts.notoSans(
@@ -493,7 +462,6 @@ class _ItemDetail2State extends State<ItemDetail2> {
                       color: Colors.grey, fontWeight: FontWeight.bold)),
               onPressed: () {
                 Navigator.pop(ctx); // 다이얼로그 닫기
-                // Navigator.pop(context, widget.item); // 이전 화면으로 아이템 정보 전달
               },
             ),
           ],

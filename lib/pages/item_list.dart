@@ -228,8 +228,8 @@ class _ItemListState extends State<ItemList> {
                 ],
               ),
             ),
-      floatingActionButton: Theme(
-        data: Theme.of(context).copyWith(
+        floatingActionButton: Theme(
+          data: Theme.of(context).copyWith(
           splashColor: Colors.transparent, // 터치 시 물결 효과 제거
           highlightColor: Colors.transparent, // 터치 시 하이라이트 효과 제거
           shadowColor: Colors.transparent, // 그림자 제거

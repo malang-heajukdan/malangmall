@@ -22,11 +22,6 @@ class ItemCart extends StatelessWidget {
     final bool isCartEmpty = cartItems.isEmpty;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    // // 총 가격 계산 함수
-    // int getTotalPrice() {
-    //  return cartItems.fold(
-    //         0, (sum, e) => sum + (e.item.price * e.quantity));
-    //          }
 
     return Stack(
       children: [
@@ -122,19 +117,7 @@ class ItemCart extends StatelessWidget {
                                   ),
                                 ),
 
-                                // Container( // 이미지 불러오기 방법2
-                                //   width: 120,
-                                //   height: 120,
-                                //   decoration: BoxDecoration(
-                                //     image: DecorationImage(
-                                //       image:
-                                //           AssetImage('assets/images/octopus.png'),
-                                //       fit: BoxFit.cover,
-                                //     ),
-                                //     borderRadius: BorderRadius.circular(8),
-                                //   ),
-                                // ),
-
+                             
                                 const SizedBox(width: 12),
                                 Expanded(
                                   //중간

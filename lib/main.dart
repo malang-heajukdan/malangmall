@@ -36,28 +36,16 @@ class MyApp extends StatelessWidget {
       title: 'Shopping Mall',
       themeMode: ThemeMode.system,
       theme: lightTheme,
-      // darkTheme: darkTheme,
       debugShowCheckedModeBanner: false,
-      // home: const ItemRegister()); // 영민 테스트용!
-      // home: ItemDetail2(item: testItem)); // 소린 테스트용!
-      //home: const ItemList()); //초희 테스트
-      // 초희님까지 끝나면!! 아래코드로 실행해주기!
-      // home: const ItemList(),
       initialRoute: '/',
       routes: {
-        '/cart': (_) => const ItemCart(),
-        '/': (_) => const ThumbnailTouchPage(
-            imagePath:
-                'lib/assets/images/thumbnail_final.png'), // 초기화면 입력이 필요합니다.
+        '/': (_) => const ThumbnailTouchPage( imagePath:'lib/assets/images/thumbnail_final.png'), 
+        '/cart': (_) => const ItemCart(),        
         '/register': (_) => const ItemRegisterV2(),
         '/detail': (_) => ItemDetail2(item: testItem),
         '/list': (_) => const ItemList(),
-        '/time_sale': (_) => const ThumbnailTouchPage(
-            imagePath: 'lib/assets/images/time_sale.png'),
+        '/time_sale': (_) => const ThumbnailTouchPage( imagePath: 'lib/assets/images/time_sale.png'),
       },
-      // home: ItemCart(),
     );
-
-    //home: ThumbnailTouchPage()); // 썸네일 터치 페이지로 시작
   }
 }

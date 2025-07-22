@@ -15,7 +15,3 @@ final lightTheme = ThemeData(
   ),
 );
 
-// dark theme!!
-// final darkTheme = ThemeData(
-//   useMaterial3: true,
-// );
